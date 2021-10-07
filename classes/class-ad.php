@@ -23,7 +23,7 @@ class Mai_Ad {
 	public function __construct( $args ) {
 		$args = wp_parse_args( $args,
 			[
-				'ad'      => '',
+				'code'    => '',
 				'desktop' => [],
 				'tablet'  => [],
 				'mobile'  => [],
@@ -56,7 +56,7 @@ class Mai_Ad {
 		$args['desktop'] = array_map( 'esc_html', $args['desktop'] );
 		$args['tablet']  = array_map( 'esc_html', $args['tablet'] );
 		$args['mobile']  = array_map( 'esc_html', $args['mobile'] );
-		$args['ad']      = trim( $args['ad'] );
+		$args['code']    = trim( $args['code'] );
 
 		$this->args = $args;
 	}
@@ -96,7 +96,7 @@ class Mai_Ad {
 	 */
 	function get_ad() {
 		$html  = $this->get_css();
-		$html .= $this->args['ad'];
+		$html .= $this->args['code'];
 
 		if ( ! function_exists( 'genesis_markup' ) ) {
 			return sprintf( '<div class="mai-ad">%s</div>', $html );
