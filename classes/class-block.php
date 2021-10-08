@@ -13,9 +13,19 @@ class Mai_Ad_Block {
 	 * @return void
 	 */
 	public function __construct() {
+		$this->hooks();
+	}
+
+	/**
+	 * Runs hooks.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function hooks() {
 		add_action( 'acf/init', [ $this, 'register' ] );
 		add_filter( 'acf/load_field/key=maiam_ad_id', [ $this, 'load_ads' ], 10, 3 );
-
 	}
 
 	/**

@@ -26,9 +26,9 @@ class Mai_Ads_Manager_Fields {
 	function hooks() {
 		add_action( 'wp_head', [ $this, 'header' ] );
 		add_filter( 'acf/load_field/key=maiam_header', [ $this, 'load_header' ] );
+		add_filter( 'acf/load_field/key=maiam_label', [ $this, 'load_label' ] );
+		add_filter( 'acf/load_field/key=maiam_breakpoints', [ $this, 'load_breakpoints' ] );
 		add_filter( 'acf/load_field/key=maiam_ads', [ $this, 'load_ads' ] );
-		add_filter( 'acf/load_field/key=maiam_tablet_breakpoint', [ $this, 'tablet_breakpoint_placeholder' ] );
-		add_filter( 'acf/load_field/key=maiam_mobile_breakpoint', [ $this, 'mobile_breakpoint_placeholder' ] );
 		add_filter( 'acf/prepare_field/key=maiam_id', [ $this, 'prepare_id' ] );
 		add_action( 'acf/save_post', [ $this, 'save' ], 99 );
 	}
@@ -65,6 +65,39 @@ class Mai_Ads_Manager_Fields {
 	}
 
 	/**
+	 * Loads label field value from our custom option.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
+	function load_label( $field ) {
+		$field['value'] = maiam_get_option( 'label', '' );
+		return $field;
+	}
+
+	/**
+	 * Loads breakpoints values.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
+	function load_breakpoints( $field ) {
+		$breakpoints    = maiam_get_option( 'breakpoints', '' );
+		$field['value'] = [
+			'maiam_tablet_breakpoint' => isset( $breakpoints['tablet'] ) ? $breakpoints['tablet'] : '',
+			'maiam_mobile_breakpoint' => isset( $breakpoints['mobile'] ) ? $breakpoints['mobile'] : '',
+		];
+		return $field;
+	}
+
+
+	/**
 	 * Loads ads repeater field values from our custom option.
 	 *
 	 * @since 0.1.0
@@ -88,18 +121,16 @@ class Mai_Ads_Manager_Fields {
 					'maiam_code'          => $this->get_value( $ad, 'code' ),
 					'maiam_name'          => $this->get_value( $ad, 'name' ),
 					'maiam_desktop_group' => [
-						'maiam_desktop_width'     => $this->get_value( $desktop, 'width' ),
-						'maiam_desktop_height'    => $this->get_value( $desktop, 'height' ),
+						'maiam_desktop_width'  => $this->get_value( $desktop, 'width' ),
+						'maiam_desktop_height' => $this->get_value( $desktop, 'height' ),
 					],
 					'maiam_tablet_group' => [
-						'maiam_tablet_width'      => $this->get_value( $tablet, 'width' ),
-						'maiam_tablet_height'     => $this->get_value( $tablet, 'height' ),
-						'maiam_tablet_breakpoint' => $this->get_value( $tablet, 'breakpoint' ),
+						'maiam_tablet_width'  => $this->get_value( $tablet, 'width' ),
+						'maiam_tablet_height' => $this->get_value( $tablet, 'height' ),
 					],
 					'maiam_mobile_group' => [
-						'maiam_mobile_width'      => $this->get_value( $mobile, 'width' ),
-						'maiam_mobile_height'     => $this->get_value( $mobile, 'height' ),
-						'maiam_mobile_breakpoint' => $this->get_value( $mobile, 'breakpoint' ),
+						'maiam_mobile_width'  => $this->get_value( $mobile, 'width' ),
+						'maiam_mobile_height' => $this->get_value( $mobile, 'height' ),
 					],
 				];
 			}
@@ -120,34 +151,6 @@ class Mai_Ads_Manager_Fields {
 	 */
 	function get_value( array $ad, $key ) {
 		return isset( $ad[ $key ] ) ? $ad[ $key ] : '';
-	}
-
-	/**
-	 * Gets default placeholder value.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param array $field The field data.
-	 *
-	 * @return array
-	 */
-	function tablet_breakpoint_placeholder( $field ) {
-		$field['placeholder'] = maiam_get_tablet_breakpoint();
-		return $field;
-	}
-
-	/**
-	 * Gets default placeholder value.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param array $field The field data.
-	 *
-	 * @return array
-	 */
-	function mobile_breakpoint_placeholder( $field ) {
-		$field['placeholder'] = maiam_get_mobile_breakpoint();
-		return $field;
 	}
 
 	/**
@@ -197,14 +200,21 @@ class Mai_Ads_Manager_Fields {
 			return;
 		}
 
+		// $breakpoints = get_field( 'maiam_breakpoints', 'option' );
+		// $breakpoints = [
+		// 	'tablet' => $breakpoints['tablet'] ?: maiam_get_breakpoint( 'tablet' ),
+		// 	'mobile' => $breakpoints['mobile'] ?: maiam_get_breakpoint( 'mobile' ),
+		// ];
+
 		// Get formatted data.
 		$options = [
-			'header' => wp_kses_post( get_field( 'maiam_header', 'option' ) ),
-			'label'  => esc_html( get_field( 'maiam_label', 'option' ) ),
-			'ads'    => $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) ),
+			'header'      => wp_kses_post( get_field( 'maiam_header', 'option' ) ),
+			'label'       => esc_html( get_field( 'maiam_label', 'option' ) ),
+			'breakpoints' => get_field( 'maiam_breakpoints', 'option' ),
+			'ads'         => $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) ),
 		];
 
-		update_option( 'mai_ad_manager', $options );
+		update_option( 'mai_ads_manager', $options );
 
 		$first = maiam_get_option( 'first-version' );
 
@@ -218,10 +228,16 @@ class Mai_Ads_Manager_Fields {
 		// To delete.
 		$options = [
 			'options_maiam_header',
-			'_options_maiam_header',
 			'options_maiam_label',
-			'_options_maiam_label',
+			'options_maiam_breakpoints',
+			'options_maiam_breakpoints_tablet',
+			'options_maiam_breakpoints_mobile',
 			'options_maiam_ads',
+			'_options_maiam_header',
+			'_options_maiam_label',
+			'_options_maiam_breakpoints',
+			'_options_maiam_breakpoints_tablet',
+			'_options_maiam_breakpoints_mobile',
 			'_options_maiam_ads',
 		];
 

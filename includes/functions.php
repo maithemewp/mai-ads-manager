@@ -48,32 +48,24 @@ function maiam_get_parsed_ad_args( $args ) {
 			'label'   => maiam_get_option( 'label', '' ),
 			'name'    => '',
 			'code'    => '',
-			'desktop' => [],
-			'tablet'  => [],
-			'mobile'  => [],
-		]
-	);
-
-	$args['desktop'] = wp_parse_args( $args['desktop'],
-		[
-			'width'  => '',
-			'height' => '',
-		]
-	);
-
-	$args['tablet'] = wp_parse_args( $args['tablet'],
-		[
-			'width'      => '',
-			'height'     => '',
-			'breakpoint' => maiam_get_tablet_breakpoint(),
-		]
-	);
-
-	$args['mobile'] = wp_parse_args( $args['mobile'],
-		[
-			'width'      => '',
-			'height'     => '',
-			'breakpoint' => maiam_get_mobile_breakpoint(),
+			'desktop' => wp_parse_args( $args['desktop'],
+				[
+					'width'  => '',
+					'height' => '',
+				]
+			),
+			'tablet'  => wp_parse_args( $args['tablet'],
+				[
+					'width'  => '',
+					'height' => '',
+				]
+			),
+			'mobile'  => wp_parse_args( $args['mobile'],
+				[
+					'width'  => '',
+					'height' => '',
+				]
+			),
 		]
 	);
 
@@ -101,7 +93,7 @@ function maiam_get_options() {
 		return $options;
 	}
 
-	return (array) get_option( 'mai_ad_manager', [] );
+	return (array) get_option( 'mai_ads_manager', [] );
 }
 
 /**
@@ -136,23 +128,79 @@ function maiam_update_option( $option, $value ) {
 }
 
 /**
- * Gets tablet breakpoint.
+ * Gets a breakpoint.
  *
  * @since 0.1.0
  *
- * @return string
+ * @param string $breakpoint The breakpoint name.
+ * @param string $suffix     The unit value suffix.
+ *
+ * @return array
  */
-function maiam_get_tablet_breakpoint() {
-	return function_exists( 'mai_get_breakpoint' ) ? mai_get_breakpoint( 'lg' ) : 1000;
+function maiam_get_breakpoint( $breakpoint, $suffix = '' ) {
+	$breakpoints = maiam_get_breakpoints();
+	$breakpoint  = isset( $breakpoints[ $breakpoint ] ) ? (int) filter_var( $breakpoints[ $breakpoint ], FILTER_SANITIZE_NUMBER_INT ) : 0;
+
+	return $breakpoint . $suffix;
 }
 
 /**
- * Gets mobile breakpoint.
+ * Gets breakpoints.
  *
  * @since 0.1.0
  *
- * @return string
+ * @return array
  */
-function maiam_get_mobile_breakpoint() {
-	return function_exists( 'mai_get_breakpoint' ) ? mai_get_breakpoint( 'sm' ) : 600;
+function maiam_get_breakpoints() {
+	static $breakpoints = null;
+
+	if ( ! is_null( $breakpoints ) ) {
+		return $breakpoints;
+	}
+
+	$breakpoints = maiam_get_option( 'breakpoints', maiam_get_default_breakpoints() );
+	$breakpoints = apply_filters( 'maiam_breakpoints', $breakpoints );
+
+	return $breakpoints;
+}
+
+/**
+ * Gets a default breakpoint.
+ *
+ * @since 0.1.0
+ *
+ * @param string $breakpoint The breakpoint name.
+ * @param string $suffix     The unit value suffix.
+ *
+ * @return array
+ */
+function maiam_get_default_breakpoint( $breakpoint, $suffix = '' ) {
+	$breakpoints = maiam_get_default_breakpoints();
+	$breakpoint  = isset( $breakpoints[ $breakpoint ] ) ? (int) filter_var( $breakpoints[ $breakpoint ], FILTER_SANITIZE_NUMBER_INT ) : 0;
+
+	return $breakpoint . $suffix;
+}
+
+/**
+ * Gets default breakpoints.
+ *
+ * @since 0.1.0
+ *
+ * @return array
+ */
+function maiam_get_default_breakpoints() {
+	static $breakpoints = null;
+
+	if ( ! is_null( $breakpoints ) ) {
+		return $breakpoints;
+	}
+
+	$breakpoints = [
+		'tablet' => function_exists( 'mai_get_breakpoint' ) ? mai_get_breakpoint( 'lg' ) : 1000,
+		'mobile' => function_exists( 'mai_get_breakpoint' ) ? mai_get_breakpoint( 'sm' ) : 600,
+	];
+
+	$breakpoints = apply_filters( 'maiam_default_breakpoints', $breakpoints );
+
+	return $breakpoints;
 }

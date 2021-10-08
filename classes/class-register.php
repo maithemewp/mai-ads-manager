@@ -13,6 +13,17 @@ class Mai_Ads_Manager_Register {
 	 * @return void
 	 */
 	public function __construct() {
+		$this->hooks();
+	}
+
+	/**
+	 * Runs hooks.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function hooks() {
 		add_action( 'acf/init', [ $this, 'register' ] );
 	}
 
@@ -49,10 +60,42 @@ class Mai_Ads_Manager_Register {
 					[
 						'label'         => __( 'Label', 'mai-ads-manager' ),
 						'key'           => 'maiam_label',
-						'name'          => 'name',
+						'name'          => 'maiam_label',
 						'type'          => 'text',
 						'instructions'  => __( 'Optional label to display above ads.', 'mai-ads-manager' ),
 						'default_value' => __( 'Advertisement', 'mai-ads-manager' ),
+					],
+					[
+						'label'        => __( 'Breakpoints', 'mai-ads-manager' ),
+						'instructions' => __( 'The max screen width to display ad container in these dimensions. Leave empty to use theme default.', 'mai-ads-manager' ),
+						'key'          => 'maiam_breakpoints',
+						'name'         => 'maiam_breakpoints',
+						'type'         => 'group',
+						'layout'       => 'block',
+						'sub_fields'   => [
+							[
+								'key'           => 'maiam_tablet_breakpoint',
+								'name'          => 'tablet',
+								'type'          => 'number',
+								'instructions'  => __( 'Tablet', 'mai-ads-manager' ),
+								'placeholder'   => maiam_get_default_breakpoint( 'tablet' ),
+								'append'        => 'px',
+								'wrapper'       => [
+									'width' => '50',
+								],
+							],
+							[
+								'key'           => 'maiam_mobile_breakpoint',
+								'name'          => 'mobile',
+								'type'          => 'number',
+								'instructions'  => __( 'Mobile', 'mai-ads-manager' ),
+								'placeholder'   => maiam_get_default_breakpoint( 'mobile' ),
+								'append'        => 'px',
+								'wrapper'       => [
+									'width' => '50',
+								],
+							],
+						],
 					],
 					[
 						'label'        => __( 'Ads', 'mai-ads-manager' ),
@@ -93,9 +136,9 @@ class Mai_Ads_Manager_Register {
 								'type'  => 'tab',
 							],
 							[
-								'key'       => 'maiam_message',
+								'key'       => 'maiam_details_message',
 								'type'      => 'message',
-								'message'   => __( 'Sizes are used to build a predefined max container size to avoid cumulative layout shift (CLS). Breakpoint is the max screen width to display ad container in these dimensions. Leave breakpoint empty to use theme default.', 'mai-ads-manager' ),
+								'message'   => __( 'Sizes are used to build a predefined max container size and aspect ratio to avoid cumulative layout shift (CLS).', 'mai-ads-manager' ),
 								'new_lines' => 'wpautop',
 								'esc_html'  => 0,
 							],
@@ -113,7 +156,7 @@ class Mai_Ads_Manager_Register {
 										'instructions' => __( 'Width', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
-											'width' => '33.333333',
+											'width' => '50',
 										],
 									],
 									[
@@ -123,7 +166,7 @@ class Mai_Ads_Manager_Register {
 										'instructions' => __( 'Height', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
-											'width' => '33.333333',
+											'width' => '50',
 										],
 									],
 								],
@@ -142,7 +185,7 @@ class Mai_Ads_Manager_Register {
 										'instructions' => __( 'Width', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
-											'width' => '33.333333',
+											'width' => '50',
 										],
 									],
 									[
@@ -152,18 +195,7 @@ class Mai_Ads_Manager_Register {
 										'instructions' => __( 'Height', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
-											'width' => '33.333333',
-										],
-									],
-									[
-										'key'          => 'maiam_tablet_breakpoint',
-										'name'         => 'breakpoint',
-										'type'         => 'number',
-										'instructions' => __( 'Breakpoint', 'mai-ads-manager' ),
-										'placeholder'  => '1000',
-										'append'       => 'px',
-										'wrapper'      => [
-											'width' => '33.333333',
+											'width' => '50',
 										],
 									],
 								],
@@ -182,7 +214,7 @@ class Mai_Ads_Manager_Register {
 										'instructions' => __( 'Width', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
-											'width' => '33.333333',
+											'width' => '50',
 										],
 									],
 									[
@@ -192,18 +224,7 @@ class Mai_Ads_Manager_Register {
 										'instructions' => __( 'Height', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
-											'width' => '33.333333',
-										],
-									],
-									[
-										'key'          => 'maiam_mobile_breakpoint',
-										'name'         => 'breakpoint',
-										'type'         => 'number',
-										'instructions' => __( 'Breakpoint', 'mai-ads-manager' ),
-										'placeholder'  => '600',
-										'append'       => 'px',
-										'wrapper'      => [
-											'width' => '33.333333',
+											'width' => '50',
 										],
 									],
 								],
