@@ -48,26 +48,20 @@ function maiam_get_parsed_ad_args( $args ) {
 			'label'   => maiam_get_option( 'label', '' ),
 			'name'    => '',
 			'code'    => '',
-			'desktop' => wp_parse_args( $args['desktop'],
-				[
-					'width'  => '',
-					'height' => '',
-				]
-			),
-			'tablet'  => wp_parse_args( $args['tablet'],
-				[
-					'width'  => '',
-					'height' => '',
-				]
-			),
-			'mobile'  => wp_parse_args( $args['mobile'],
-				[
-					'width'  => '',
-					'height' => '',
-				]
-			),
+			'desktop' => [],
+			'tablet'  => [],
+			'mobile'  => [],
 		]
 	);
+
+	foreach ( [ 'desktop', 'tablet', 'mobile' ] as $break ) {
+		$args[ $break ] = wp_parse_args( $args[ $break ],
+			[
+				'width'  => '',
+				'height' => '',
+			]
+		);
+	}
 
 	$args['label']   = wp_kses_post( trim( $args['label'] ) );
 	$args['name']    = wp_kses_post( trim( $args['name'] ) );
@@ -158,7 +152,13 @@ function maiam_get_breakpoints() {
 		return $breakpoints;
 	}
 
-	$breakpoints = maiam_get_option( 'breakpoints', maiam_get_default_breakpoints() );
+	$defaults    = maiam_get_default_breakpoints();
+	$breakpoints = maiam_get_option( 'breakpoints' );
+	$breakpoints = [
+		'tablet' => isset( $breakpoints['tablet'] ) && $breakpoints['tablet'] ? $breakpoints['tablet'] : $defaults['tablet'],
+		'mobile' => isset( $breakpoints['mobile'] ) && $breakpoints['mobile'] ? $breakpoints['mobile'] : $defaults['mobile'],
+	];
+
 	$breakpoints = apply_filters( 'maiam_breakpoints', $breakpoints );
 
 	return $breakpoints;
