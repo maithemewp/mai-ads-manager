@@ -84,73 +84,22 @@ class Mai_Ad {
 			return;
 		}
 
-		$loaded = true;
-		$mobile = maiam_get_breakpoint( 'mobile' );
-		$tablet = maiam_get_breakpoint( 'tablet' );
+		// TODO: Background on ad content should only show if max-width has value.
 
-		ob_start();
-		?>
-		<style>
-		.mai-ad {
-			max-width: var(--mai-ad-max-width, var(--mai-ad-max-width-desktop, unset));
-			margin-right: auto;
-			margin-bottom: var(--mai-ad-margin-bottom, 0);
-			margin-left: auto;
-		}
+		$suffix       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$desktop      = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad{$suffix}.css";
+		$mobile       = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-mobile{$suffix}.css";
+		$tablet       = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-tablet{$suffix}.css";
+		$mobile_break = maiam_get_breakpoint( 'mobile' );
+		$tablet_break = maiam_get_breakpoint( 'tablet' );
+		$css          = sprintf( '<link rel="stylesheet" href="%s" />', $desktop );
+		$css         .= sprintf( '<link rel="stylesheet" media="screen and (max-width: %spx)" href="%s" />', $mobile_break, $mobile );
+		$css         .= sprintf( '<link rel="stylesheet" media="screen and (min-width: %spx) and (max-width: %spx)" href="%s" />', ($mobile_break + 1), $tablet_break, $tablet );
 
-		.mai-ad[data-label]::before {
-			display: block;
-			margin-bottom: var(--mai-ad-label-margin-bottom, 6px);
-			color: var(--mai-ad-label-color, rgba(0, 0, 0, 0.5));
-			font-size: var(--mai-ad-label-font-size, 0.9rem);
-			font-variant: all-petite-caps;
-			line-height: 1;
-			letter-spacing: 1px;
-			text-align: var(--mai-ad-label-text-align, center);
-			content: attr(data-label);
-		}
+		// For some reason CSS wasn't loading in the editor.
+		$loaded = ! is_admin() ? true : false;
 
-		.mai-ad-inner {
-			display: flex;
-		}
-
-		.mai-ad-inner::before {
-			display: block;
-			width: 1px;
-			height: 0;
-			margin-left: -1px;
-			padding-bottom: calc(100% / (var(--mai-ad-aspect-ratio, var(--mai-ad-aspect-ratio-desktop, 0))));
-			content: "";
-		}
-
-		.mai-ad-content {
-			flex: 1;
-			background: var(--mai-ad-background, repeating-conic-gradient(rgba(0, 0, 0, 0.03) 0% 25%, rgba(0, 0, 0, 0.01) 0% 50%) 50% / 20px 20px);
-			background-position: top left;
-		}
-
-		@media only screen and (max-width: <?php echo $mobile . 'px'; ?>) {
-
-			.mai-ad {
-				--mai-ad-max-width: var(--mai-ad-max-width-mobile, var(--mai-ad-max-width-desktop, unset));
-				--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-mobile, var(--mai-ad-aspect-ratio-desktop, 0));
-			}
-		}
-
-		@media only screen and (min-width: <?php echo ($mobile + 1). 'px'; ?>) and (max-width: <?php echo $tablet . 'px'; ?>) {
-
-			.mai-ad {
-				--mai-ad-max-width: var(--mai-ad-max-width-tablet, var(--mai-ad-max-width-desktop, unset));
-				--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-tablet, var(--mai-ad-aspect-ratio-desktop, 0));
-			}
-		}
-
-		.entry-content {
-			--mai-ad-margin-bottom: var(--spacing-md, 24px);
-		}
-		</style>
-		<?php
-		return ob_get_clean();
+		return $css;
 	}
 
 	/**
