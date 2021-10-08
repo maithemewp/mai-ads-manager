@@ -200,12 +200,6 @@ class Mai_Ads_Manager_Fields {
 			return;
 		}
 
-		// $breakpoints = get_field( 'maiam_breakpoints', 'option' );
-		// $breakpoints = [
-		// 	'tablet' => $breakpoints['tablet'] ?: maiam_get_breakpoint( 'tablet' ),
-		// 	'mobile' => $breakpoints['mobile'] ?: maiam_get_breakpoint( 'mobile' ),
-		// ];
-
 		// Get formatted data.
 		$options = [
 			'header'      => wp_kses_post( get_field( 'maiam_header', 'option' ) ),
