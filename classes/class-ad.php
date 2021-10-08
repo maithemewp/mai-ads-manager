@@ -62,10 +62,6 @@ class Mai_Ad {
 		$html .= sprintf( '<div class="mai-ad"%s%s>', $this->get_label(), $this->get_style() );
 			$html .= '<div class="mai-ad-inner">';
 				$html .= '<div class="mai-ad-content">';
-					if ( $this->args['label'] ) {
-						$html .= sprintf( '<span class="mai-ad-label" data-label="%s"></span>', $this->args['label'] );
-					}
-
 					$html .= $this->args['code'];
 				$html .= '</div>';
 			$html .= '</div>';
@@ -89,10 +85,72 @@ class Mai_Ad {
 		}
 
 		$loaded = true;
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$url    = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad{$suffix}.css";
+		$mobile = maiam_get_breakpoint( 'mobile' );
+		$tablet = maiam_get_breakpoint( 'tablet' );
 
-		return sprintf( '<link rel="stylesheet" type="text/css" href="%s">', $url );
+		ob_start();
+		?>
+		<style>
+		.mai-ad {
+			max-width: var(--mai-ad-max-width, var(--mai-ad-max-width-desktop, unset));
+			margin-right: auto;
+			margin-bottom: var(--mai-ad-margin-bottom, 0);
+			margin-left: auto;
+		}
+
+		.mai-ad[data-label]::before {
+			display: block;
+			margin-bottom: var(--mai-ad-label-margin-bottom, 6px);
+			color: var(--mai-ad-label-color, rgba(0, 0, 0, 0.5));
+			font-size: var(--mai-ad-label-font-size, 0.9rem);
+			font-variant: all-petite-caps;
+			line-height: 1;
+			letter-spacing: 1px;
+			text-align: var(--mai-ad-label-text-align, center);
+			content: attr(data-label);
+		}
+
+		.mai-ad-inner {
+			display: flex;
+		}
+
+		.mai-ad-inner::before {
+			display: block;
+			width: 1px;
+			height: 0;
+			margin-left: -1px;
+			padding-bottom: calc(100% / (var(--mai-ad-aspect-ratio, var(--mai-ad-aspect-ratio-desktop, 0))));
+			content: "";
+		}
+
+		.mai-ad-content {
+			flex: 1;
+			background: var(--mai-ad-background, repeating-conic-gradient(rgba(0, 0, 0, 0.03) 0% 25%, rgba(0, 0, 0, 0.01) 0% 50%) 50% / 20px 20px);
+			background-position: top left;
+		}
+
+		@media only screen and (max-width: <?php echo $mobile . 'px'; ?>) {
+
+			.mai-ad {
+				--mai-ad-max-width: var(--mai-ad-max-width-mobile, var(--mai-ad-max-width-desktop, unset));
+				--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-mobile, var(--mai-ad-aspect-ratio-desktop, 0));
+			}
+		}
+
+		@media only screen and (min-width: <?php echo ($mobile + 1). 'px'; ?>) and (max-width: <?php echo $tablet . 'px'; ?>) {
+
+			.mai-ad {
+				--mai-ad-max-width: var(--mai-ad-max-width-tablet, var(--mai-ad-max-width-desktop, unset));
+				--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-tablet, var(--mai-ad-aspect-ratio-desktop, 0));
+			}
+		}
+
+		.entry-content {
+			--mai-ad-margin-bottom: var(--spacing-md, 24px);
+		}
+		</style>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
