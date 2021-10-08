@@ -23,6 +23,7 @@ class Mai_Ad {
 	public function __construct( $args ) {
 		$args = wp_parse_args( $args,
 			[
+				'label'   => __( 'Advertisement', 'mai-ads-manager' ),
 				'code'    => '',
 				'desktop' => [],
 				'tablet'  => [],
@@ -56,6 +57,7 @@ class Mai_Ad {
 		$args['desktop'] = array_map( 'esc_html', $args['desktop'] );
 		$args['tablet']  = array_map( 'esc_html', $args['tablet'] );
 		$args['mobile']  = array_map( 'esc_html', $args['mobile'] );
+		$args['label']   = trim( $args['label'] );
 		$args['code']    = trim( $args['code'] );
 
 		$this->args = $args;
@@ -69,7 +71,7 @@ class Mai_Ad {
 	 * @return void
 	 */
 	function render() {
-		if ( ! $this->args['ad'] ) {
+		if ( ! $this->args['code'] ) {
 			return;
 		}
 
@@ -96,44 +98,19 @@ class Mai_Ad {
 	 */
 	function get_ad() {
 		$html  = $this->get_css();
-		$html .= $this->args['code'];
+		$html .= sprintf( '<div class="mai-ad"%s%s>', $this->get_label(), $this->get_style() );
+			$html .= '<div class="mai-ad-inner">';
+				$html .= '<div class="mai-ad-content">';
+					if ( $this->args['label'] ) {
+						$html .= sprintf( '<span class="mai-ad-label" data-label="%s"></span>', $this->args['label'] );
+					}
 
-		if ( ! function_exists( 'genesis_markup' ) ) {
-			return sprintf( '<div class="mai-ad">%s</div>', $html );
-		}
+					$html .= $this->args['code'];
+				$html .= '</div>';
+			$html .= '</div>';
+		$html .= '</div>';
 
-		$atts = [
-			'class'      => 'mai-ad',
-			'data-label' => $this->args['label'],
-			'style'      => '',
-		];
-
-		if ( $this->args['width'] ) {
-			$width          = $this->get_unit_value( $this->args['width'] );
-			$atts['style'] .= sprintf( 'max-width:%s;', $width );
-		}
-
-		if ( $this->args['height'] ) {
-			$height         = $this->get_unit_value( $this->args['height'] );
-			$atts['style'] .= sprintf( 'max-height:%s;', $height );
-		}
-
-		if ( $atts['style'] ) {
-			$atts['style'] = trim( $atts['style'] );
-		} else {
-			unset( $atts['style'] );
-		}
-
-		return genesis_markup(
-			[
-				'open'    => '<div %s>',
-				'close'   => '</div>',
-				'content' => $html,
-				'context' => 'mai-ad',
-				'echo'    => false,
-				'atts'    => $atts,
-			]
-		);
+		return $html;
 	}
 
 	function get_css() {
@@ -148,6 +125,31 @@ class Mai_Ad {
 		$url    = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad{$suffix}.css";
 
 		return sprintf( '<link rel="stylesheet" type="text/css" href="%s">', $url );
+	}
+
+	function get_label() {
+		return $this->args['label'] ? sprintf( ' data-label="%s"', $this->args['label'] ) : '';
+	}
+
+	function get_style() {
+		$styles = '';
+		$breaks = [
+			'mobile',
+			'tablet',
+			'desktop',
+		];
+
+		foreach ( $breaks as $break ) {
+			if ( $this->args[ $break ]['width'] ) {
+				$styles .= sprintf( '--mai-ad-max-width-%s:%s;', $break, $this->get_unit_value( $this->args[ $break ]['width'] ) );
+
+				if ( $this->args[ $break ]['height'] ) {
+					$styles .= sprintf( '--mai-ad-aspect-ratio-%s:%s/%s;', $break, $this->args[ $break ]['width'], $this->args[ $break ]['height'] );
+				}
+			}
+		}
+
+		return $styles ? sprintf( ' style="%s"', $styles ) : '';
 	}
 
 	/**
