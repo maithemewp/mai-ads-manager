@@ -161,7 +161,7 @@ class Mai_Ad {
 	 * @return string
 	 */
 	function get_label() {
-		return $this->args['label'] ? sprintf( ' data-label="%s"', $this->args['label'] ) : '';
+		return $this->args['label'] ? sprintf( ' data-label="%s"', wptexturize( $this->args['label'] ) ) : '';
 	}
 
 	/**
