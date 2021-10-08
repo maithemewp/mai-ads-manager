@@ -36,22 +36,6 @@
 	background-position: top left;
 }
 
-/* @media only screen and (max-width: 600px) {
-
-	.mai-ad {
-		--mai-ad-max-width: var(--mai-ad-max-width-mobile, var(--mai-ad-max-width-desktop, unset));
-		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-mobile, var(--mai-ad-aspect-ratio-desktop, 0));
-	}
-} */
-
-/* @media only screen and (min-width: 601px) and (max-width: 1000px) {
-
-	.mai-ad {
-		--mai-ad-max-width: var(--mai-ad-max-width-tablet, var(--mai-ad-max-width-desktop, unset));
-		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-tablet, var(--mai-ad-aspect-ratio-desktop, 0));
-	}
-} */
-
 .entry-content {
 	--mai-ad-margin-bottom: var(--spacing-md, 24px);
 }
