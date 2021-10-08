@@ -16,6 +16,13 @@ class Mai_Ads_Manager_Register {
 		add_action( 'acf/init', [ $this, 'register' ] );
 	}
 
+	/**
+	 * Registers options page and field groups from settings and custom block.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
 	function register() {
 		acf_add_options_sub_page(
 			[
@@ -40,6 +47,14 @@ class Mai_Ads_Manager_Register {
 						'instructions' => __( 'Add any global header code here.', 'mai-ads-manager' ),
 					],
 					[
+						'label'         => __( 'Label', 'mai-ads-manager' ),
+						'key'           => 'maiam_label',
+						'name'          => 'name',
+						'type'          => 'text',
+						'instructions'  => __( 'Optional label to display above ads.', 'mai-ads-manager' ),
+						'default_value' => __( 'Advertisement', 'mai-ads-manager' ),
+					],
+					[
 						'label'        => __( 'Ads', 'mai-ads-manager' ),
 						'key'          => 'maiam_ads',
 						'name'         => 'maiam_ads',
@@ -57,7 +72,7 @@ class Mai_Ads_Manager_Register {
 								'type'  => 'tab',
 							],
 							[
-								'label'        => 'Name',
+								'label'        => __( 'Name', 'mai-ads-manager' ),
 								'key'          => 'maiam_name',
 								'name'         => 'name',
 								'type'         => 'text',

@@ -63,7 +63,7 @@ class Mai_Ad_Block {
 	function do_ad( $block, $content = '', $is_preview = false, $post_id = 0 ) {
 		$ad  = [];
 		$id  = get_field( 'id' );
-		$ads = (array) get_option( 'maiam_ads' );
+		$ads = (array) maiam_get_option( 'ads' );
 
 		if ( $id && isset( $ads[ $id ] ) ) {
 			$ad   = $ads[ $id ];
@@ -90,13 +90,15 @@ class Mai_Ad_Block {
 	/**
 	 * Load ad options.
 	 *
+	 * @since 0.1.0
+	 *
 	 * @param array $field The field data.
 	 *
 	 * @return array
 	 */
 	function load_ads( $field ) {
 		$field['choices'] = [];
-		$ads              = get_option( 'maiam_ads' );
+		$ads              = maiam_get_option( 'ads' );
 
 		if ( $ads ) {
 			foreach ( $ads as $id => $ad ) {

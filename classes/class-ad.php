@@ -21,46 +21,7 @@ class Mai_Ad {
 	 * @return void
 	 */
 	public function __construct( $args ) {
-		$args = wp_parse_args( $args,
-			[
-				'label'   => __( 'Advertisement', 'mai-ads-manager' ),
-				'code'    => '',
-				'desktop' => [],
-				'tablet'  => [],
-				'mobile'  => [],
-			]
-		);
-
-		$args['desktop'] = wp_parse_args( $args['desktop'],
-			[
-				'width'  => '',
-				'height' => '',
-			]
-		);
-
-		$args['tablet'] = wp_parse_args( $args['tablet'],
-			[
-				'width'      => '',
-				'height'     => '',
-				'breakpoint' => maiam_get_tablet_breakpoint(),
-			]
-		);
-
-		$args['mobile'] = wp_parse_args( $args['mobile'],
-			[
-				'width'      => '',
-				'height'     => '',
-				'breakpoint' => maiam_get_mobile_breakpoint(),
-			]
-		);
-
-		$args['label']   = trim( $args['label'] );
-		$args['code']    = trim( $args['code'] );
-		$args['desktop'] = array_map( 'esc_html', $args['desktop'] );
-		$args['tablet']  = array_map( 'esc_html', $args['tablet'] );
-		$args['mobile']  = array_map( 'esc_html', $args['mobile'] );
-
-		$this->args = $args;
+		$this->args = maiam_get_parsed_ad_args( $args );
 	}
 
 	/**
@@ -113,6 +74,13 @@ class Mai_Ad {
 		return $html;
 	}
 
+	/**
+	 * Gets ad css link if it hasn't been loaded yet.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
 	function get_css() {
 		static $loaded = false;
 
@@ -127,10 +95,24 @@ class Mai_Ad {
 		return sprintf( '<link rel="stylesheet" type="text/css" href="%s">', $url );
 	}
 
+	/**
+	 * Gets ad label.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
 	function get_label() {
 		return $this->args['label'] ? sprintf( ' data-label="%s"', $this->args['label'] ) : '';
 	}
 
+	/**
+	 * Gets ad style attribute.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
 	function get_style() {
 		$styles = '';
 		$breaks = [
@@ -153,8 +135,8 @@ class Mai_Ad {
 	}
 
 	/**
-	 * Get the unit value.
-	 * If only a number value, use the fallback..
+	 * Gets the unit value.
+	 * If only a number value, use the fallback.
 	 *
 	 * @since 0.1.0
 	 *

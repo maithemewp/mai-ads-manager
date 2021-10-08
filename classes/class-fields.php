@@ -21,17 +21,35 @@ class Mai_Ads_Manager_Fields {
 		add_action( 'acf/save_post', [ $this, 'save' ], 99 );
 	}
 
+	/**
+	 * Loads header field value from our custom option.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
 	function load_header( $field ) {
-		$field['value'] = get_option( 'maiam_header', '' );
+		$field['value'] = maiam_get_option( 'header', '' );
 		return $field;
 	}
 
+	/**
+	 * Loads ads repeater field values from our custom option.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
 	function load_ads( $field ) {
 		$field['value'] = [];
-		$ads            = get_option( 'maiam_ads', false );
+		$options        = maiam_get_options();
 
-		if ( $ads ) {
-			foreach ( $ads as $id => $ad ) {
+		if ( $options && isset( $options['ads'] ) && $options['ads'] ) {
+			foreach ( $options['ads'] as $id => $ad ) {
 				$desktop = isset( $ad['desktop'] ) ? $ad['desktop'] : [];
 				$tablet  = isset( $ad['tablet'] ) ? $ad['tablet'] : [];
 				$mobile  = isset( $ad['mobile'] ) ? $ad['mobile'] : [];
@@ -61,20 +79,57 @@ class Mai_Ads_Manager_Fields {
 		return $field;
 	}
 
-	function get_value( $ad, $key ) {
+	/**
+	 * Gets a value from array if it is set.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array  $ad  The ad data.
+	 * @param string $key The ad string to get.
+	 *
+	 * @return mixed
+	 */
+	function get_value( array $ad, $key ) {
 		return isset( $ad[ $key ] ) ? $ad[ $key ] : '';
 	}
 
+	/**
+	 * Gets default placeholder value.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
 	function tablet_breakpoint_placeholder( $field ) {
 		$field['placeholder'] = maiam_get_tablet_breakpoint();
 		return $field;
 	}
 
+	/**
+	 * Gets default placeholder value.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
 	function mobile_breakpoint_placeholder( $field ) {
 		$field['placeholder'] = maiam_get_mobile_breakpoint();
 		return $field;
 	}
 
+	/**
+	 * Sets ID feild as readonly and gets random string if value is empty.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
 	function prepare_id( $field ) {
 		$field['readonly'] = true;
 
@@ -85,6 +140,15 @@ class Mai_Ads_Manager_Fields {
 		return $field;
 	}
 
+	/**
+	 * Updates and deletes options when saving the settings page.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param mixed $post_id The post ID from ACF.
+	 *
+	 * @return void
+	 */
 	function save( $post_id ) {
 		// Bail if no data.
 		if ( ! isset( $_POST['acf'] ) || empty( $_POST['acf'] ) ) {
@@ -105,13 +169,19 @@ class Mai_Ads_Manager_Fields {
 		}
 
 		// Get formatted data.
-		$head = get_field( 'maiam_header', 'option' );
-		$ads  = get_field( 'maiam_ads', 'option' );
-		$ads  = $this->get_formatted_data( (array) $ads );
+		$options = [
+			'header' => wp_kses_post( get_field( 'maiam_header', 'option' ) ),
+			'label'  => esc_html( get_field( 'maiam_label', 'option' ) ),
+			'ads'    => $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) ),
+		];
 
-		// // Save single option values.
-		update_option( 'maiam_header', $head );
-		update_option( 'maiam_ads', $ads );
+		update_option( 'mai_ad_manager', $options );
+
+		$first = maiam_get_option( 'first-version' );
+
+		if ( ! $first ) {
+			maiam_update_option( 'first-version', MAI_ADS_MANAGER_VERSION );
+		}
 
 		// Clear repeater field.
 		update_field( 'maiam_ads', null, $post_id );
@@ -120,6 +190,8 @@ class Mai_Ads_Manager_Fields {
 		$options = [
 			'options_maiam_header',
 			'_options_maiam_header',
+			'options_maiam_label',
+			'_options_maiam_label',
 			'options_maiam_ads',
 			'_options_maiam_ads',
 		];
@@ -130,6 +202,15 @@ class Mai_Ads_Manager_Fields {
 		}
 	}
 
+	/**
+	 * Gets formatted data ready to update option.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $ads The ad data from ACF.
+	 *
+	 * @return array
+	 */
 	function get_formatted_data( $ads ) {
 		if ( ! $ads ) {
 			return $ads;
@@ -142,26 +223,10 @@ class Mai_Ads_Manager_Fields {
 
 			unset( $ad['id'] );
 
-			$data[ $id ] = wp_parse_args( $ad,
-				[
-					'name'    => '',
-					'code'    => '',
-					'desktop' => [
-						'width'  => '',
-						'height' => '',
-					],
-					'tablet' => [
-						'width'      => '',
-						'height'     => '',
-						'breakpoint' => '',
-					],
-					'mobile' => [
-						'width'      => '',
-						'height'     => '',
-						'breakpoint' => '',
-					],
-				]
-			);
+			$data[ $id ] = maiam_get_parsed_ad_args( $ad );
+
+			// This is global and shouldn't be saved to the db for each ad.
+			unset( $data[ $id ]['label'] );
 		}
 
 		return $data;
