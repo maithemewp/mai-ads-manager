@@ -13,12 +13,41 @@ class Mai_Ads_Manager_Fields {
 	 * @return void
 	 */
 	public function __construct() {
+		$this->hooks();
+	}
+
+	/**
+	 * Runs hooks.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function hooks() {
+		add_action( 'wp_head', [ $this, 'header' ] );
 		add_filter( 'acf/load_field/key=maiam_header', [ $this, 'load_header' ] );
 		add_filter( 'acf/load_field/key=maiam_ads', [ $this, 'load_ads' ] );
 		add_filter( 'acf/load_field/key=maiam_tablet_breakpoint', [ $this, 'tablet_breakpoint_placeholder' ] );
 		add_filter( 'acf/load_field/key=maiam_mobile_breakpoint', [ $this, 'mobile_breakpoint_placeholder' ] );
 		add_filter( 'acf/prepare_field/key=maiam_id', [ $this, 'prepare_id' ] );
 		add_action( 'acf/save_post', [ $this, 'save' ], 99 );
+	}
+
+	/**
+	 * Outputs header.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function header() {
+		$header = maiam_get_option( 'header', '' );
+
+		if ( ! $header ) {
+			return;
+		}
+
+		echo wp_kses_post( $header );
 	}
 
 	/**
