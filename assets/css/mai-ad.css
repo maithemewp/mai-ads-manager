@@ -1,10 +1,11 @@
 .mai-ad {
 	max-width: var(--mai-ad-max-width, var(--mai-ad-max-width-desktop, unset));
 	margin-right: auto;
+	margin-bottom: var(--mai-ad-margin-bottom, 0);
 	margin-left: auto;
 }
 
-.mai-ad::before {
+.mai-ad[data-label]::before {
 	display: block;
 	margin-bottom: var(--mai-ad-label-margin-bottom, 6px);
 	color: var(--mai-ad-label-color, rgba(0, 0, 0, 0.5));
@@ -47,4 +48,8 @@
 		--mai-ad-max-width: var(--mai-ad-max-width-tablet, unset);
 		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-tablet, unset);
 	}
+}
+
+.entry-content {
+	--mai-ad-margin-bottom: var(--spacing-md, 24px);
 }

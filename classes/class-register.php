@@ -30,17 +30,17 @@ class Mai_Ads_Manager_Register {
 		acf_add_local_field_group(
 			[
 				'key'    => 'group_615617fc82546',
-				'title'  => 'Mai Ads Manager',
+				'title'  => __( 'Mai Ads Manager', 'mai-ads-manager' ),
 				'fields' => [
 					[
-						'label'        => 'Header Code',
+						'label'        => __( 'Header Code', 'mai-ads-manager' ),
 						'key'          => 'maiam_header',
 						'name'         => 'maiam_header',
 						'type'         => 'textarea',
-						'instructions' => 'Add any global header code here.',
+						'instructions' => __( 'Add any global header code here.', 'mai-ads-manager' ),
 					],
 					[
-						'label'        => 'Ads',
+						'label'        => __( 'Ads', 'mai-ads-manager' ),
 						'key'          => 'maiam_ads',
 						'name'         => 'maiam_ads',
 						'type'         => 'repeater',
@@ -49,10 +49,10 @@ class Mai_Ads_Manager_Register {
 						'min'          => 0,
 						'max'          => 0,
 						'layout'       => 'block',
-						'button_label' => 'Create New Ad',
+						'button_label' => __( 'Create New Ad', 'mai-ads-manager' ),
 						'sub_fields'   => [
 							[
-								'label' => 'Ad Code',
+								'label' => __( 'Ad Code', 'mai-ads-manager' ),
 								'key'   => 'maiam_tab',
 								'type'  => 'tab',
 							],
@@ -61,11 +61,11 @@ class Mai_Ads_Manager_Register {
 								'key'          => 'maiam_name',
 								'name'         => 'name',
 								'type'         => 'text',
-								'instructions' => 'Used in Mai Ad block ad picker.',
+								'instructions' => __( 'Used in Mai Ad block ad picker.', 'mai-ads-manager' ),
 								'required'     => 1,
 							],
 							[
-								'label'    => 'Ad Code',
+								'label'    => __( 'Ad Code', 'mai-ads-manager' ),
 								'key'      => 'maiam_code',
 								'name'     => 'code',
 								'type'     => 'textarea',
@@ -73,19 +73,19 @@ class Mai_Ads_Manager_Register {
 								'rows'     => 4,
 							],
 							[
-								'label' => 'Details',
+								'label' => __( 'Details', 'mai-ads-manager' ),
 								'key'   => 'maiam_details_tab',
 								'type'  => 'tab',
 							],
 							[
 								'key'       => 'maiam_message',
 								'type'      => 'message',
-								'message'   => 'Sizes are used to build a predefined max container size to avoid cumulative layout shift (CLS). Breakpoint is the max screen width to display ad container in these dimensions. Leave breakpoint empty to use theme default.',
+								'message'   => __( 'Sizes are used to build a predefined max container size to avoid cumulative layout shift (CLS). Breakpoint is the max screen width to display ad container in these dimensions. Leave breakpoint empty to use theme default.', 'mai-ads-manager' ),
 								'new_lines' => 'wpautop',
 								'esc_html'  => 0,
 							],
 							[
-								'label'      => 'Default',
+								'label'      => __( 'Default', 'mai-ads-manager' ),
 								'key'        => 'maiam_desktop_group',
 								'name'       => 'desktop',
 								'type'       => 'group',
@@ -95,7 +95,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_desktop_width',
 										'name'         => 'width',
 										'type'         => 'number',
-										'instructions' => 'Width',
+										'instructions' => __( 'Width', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
 											'width' => '33.333333',
@@ -105,7 +105,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_desktop_height',
 										'name'         => 'height',
 										'type'         => 'number',
-										'instructions' => 'Height',
+										'instructions' => __( 'Height', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
 											'width' => '33.333333',
@@ -114,7 +114,7 @@ class Mai_Ads_Manager_Register {
 								],
 							],
 							[
-								'label'      => 'Tablet',
+								'label'      => __( 'Tablet', 'mai-ads-manager' ),
 								'key'        => 'maiam_tablet_group',
 								'name'       => 'tablet',
 								'type'       => 'group',
@@ -124,7 +124,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_tablet_width',
 										'name'         => 'width',
 										'type'         => 'number',
-										'instructions' => 'Width',
+										'instructions' => __( 'Width', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
 											'width' => '33.333333',
@@ -134,7 +134,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_tablet_height',
 										'name'         => 'height',
 										'type'         => 'number',
-										'instructions' => 'Height',
+										'instructions' => __( 'Height', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
 											'width' => '33.333333',
@@ -144,7 +144,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_tablet_breakpoint',
 										'name'         => 'breakpoint',
 										'type'         => 'number',
-										'instructions' => 'Breakpoint',
+										'instructions' => __( 'Breakpoint', 'mai-ads-manager' ),
 										'placeholder'  => '1000',
 										'append'       => 'px',
 										'wrapper'      => [
@@ -154,7 +154,7 @@ class Mai_Ads_Manager_Register {
 								],
 							],
 							[
-								'label'      => 'Mobile',
+								'label'      => __( 'Mobile', 'mai-ads-manager' ),
 								'key'        => 'maiam_mobile_group',
 								'name'       => 'mobile',
 								'type'       => 'group',
@@ -164,7 +164,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_mobile_width',
 										'name'         => 'width',
 										'type'         => 'number',
-										'instructions' => 'Width',
+										'instructions' => __( 'Width', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
 											'width' => '33.333333',
@@ -174,7 +174,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_mobile_height',
 										'name'         => 'height',
 										'type'         => 'number',
-										'instructions' => 'Height',
+										'instructions' => __( 'Height', 'mai-ads-manager' ),
 										'append'       => 'px',
 										'wrapper'      => [
 											'width' => '33.333333',
@@ -184,7 +184,7 @@ class Mai_Ads_Manager_Register {
 										'key'          => 'maiam_mobile_breakpoint',
 										'name'         => 'breakpoint',
 										'type'         => 'number',
-										'instructions' => 'Breakpoint',
+										'instructions' => __( 'Breakpoint', 'mai-ads-manager' ),
 										'placeholder'  => '600',
 										'append'       => 'px',
 										'wrapper'      => [
@@ -198,7 +198,7 @@ class Mai_Ads_Manager_Register {
 								'label'        => 'ID',
 								'name'         => 'id',
 								'type'         => 'text',
-								'instructions' => 'Reference ID. Cannot edit.',
+								'instructions' => __( 'Reference ID. Cannot edit.', 'mai-ads-manager' ),
 								'required'     => 1,
 								'wrapper'      => [
 									'width' => '100',
@@ -213,6 +213,42 @@ class Mai_Ads_Manager_Register {
 							'param'    => 'options_page',
 							'operator' => '==',
 							'value'    => 'mai-ads-manager',
+						],
+					],
+				],
+			]
+		);
+
+		acf_add_local_field_group(
+			[
+				'key'    => 'group_615f636b97886',
+				'title'  => __( 'Mai Ad', 'mai-ads-manager' ),
+				'fields' => [
+					[
+						'label'        => __( 'Ad to display', 'mai-ads-manager' ),
+						'key'          => 'maiam_ad_id',
+						'name'         => 'id',
+						'type'         => 'select',
+						'instructions' => '',
+						'required'     => 0,
+						'choices'      => [],
+						'allow_null'   => 1,
+					],
+					[
+						'label' => '',
+						'key'   => 'maiam_ad_hide_label',
+						'name'  => 'hide_label',
+						'type'  => 'true_false',
+						'message' => __( 'Hide label', 'mai-ads-manager' ),
+						'ui'    => 0,
+					],
+				],
+				'location' => [
+					[
+						[
+							'param'    => 'block',
+							'operator' => '==',
+							'value'    => 'acf/mai-ad',
 						],
 					],
 				],

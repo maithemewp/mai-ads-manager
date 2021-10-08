@@ -54,11 +54,11 @@ class Mai_Ad {
 			]
 		);
 
+		$args['label']   = trim( $args['label'] );
+		$args['code']    = trim( $args['code'] );
 		$args['desktop'] = array_map( 'esc_html', $args['desktop'] );
 		$args['tablet']  = array_map( 'esc_html', $args['tablet'] );
 		$args['mobile']  = array_map( 'esc_html', $args['mobile'] );
-		$args['label']   = trim( $args['label'] );
-		$args['code']    = trim( $args['code'] );
 
 		$this->args = $args;
 	}

@@ -14,7 +14,7 @@ class Mai_Ad_Block {
 	 */
 	public function __construct() {
 		add_action( 'acf/init', [ $this, 'register' ] );
-		add_filter( 'acf/load_field/key=field_615f63749dff7', [ $this, 'load_ads' ], 10, 3 );
+		add_filter( 'acf/load_field/key=maiam_ad_id', [ $this, 'load_ads' ], 10, 3 );
 
 	}
 
@@ -61,24 +61,30 @@ class Mai_Ad_Block {
 	 * @return void
 	 */
 	function do_ad( $block, $content = '', $is_preview = false, $post_id = 0 ) {
-		// TODO: THIS FIELD DOESN'T EXIST YET.
-		$id = get_field( 'maiam_id' );
-
-		if ( ! $id ) {
-			return;
-		}
-
+		$ad  = [];
+		$id  = get_field( 'id' );
 		$ads = (array) get_option( 'maiam_ads' );
 
-		if ( ! ( $ads && isset( $ads[ $id ] ) ) ) {
-			if ( $is_preview ) {
-				printf( '<p>%s</p>', __( 'Please choose a valid ad.', 'mai-ad-manager' ) );
-			}
+		if ( $id && isset( $ads[ $id ] ) ) {
+			$ad   = $ads[ $id ];
+			$hide = get_field( 'hide_label' );
 
+			if ( $hide ) {
+				$ad['label'] = '';
+			}
+		}
+
+		if ( ! $ad && $is_preview ) {
+			$ad = [
+				'code' => sprintf( '<p style="text-align:center;color:var(--body-color,inherit);font-family:var(--body-font-family,inherit);font-weight:var(--body-font-weight,inherit);font-size:var(--body-font-size,inherit);opacity:0.62;">%s</p>', __( 'Click here to choose an ad in block sidebar.', 'mai-ad-manager' ) ),
+			];
+		}
+
+		if ( ! $ad ) {
 			return;
 		}
 
-		maiam_do_ad( $ads[ $id ] );
+		maiam_do_ad( $ad );
 	}
 
 	/**
@@ -94,7 +100,7 @@ class Mai_Ad_Block {
 
 		if ( $ads ) {
 			foreach ( $ads as $id => $ad ) {
-				$field['choices'][ $id ] = isset( $ad['label'] ) ? $ad['label'] : $id;
+				$field['choices'][ $id ] = isset( $ad['name'] ) ? $ad['name'] : $id;
 			}
 		} else {
 			// TODO: TEST WITH NO ADS!
