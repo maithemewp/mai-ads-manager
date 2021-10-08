@@ -39,16 +39,16 @@
 @media only screen and (max-width: 599px) {
 
 	.mai-ad {
-		--mai-ad-max-width: var(--mai-ad-max-width-mobile, unset);
-		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-mobile, unset);
+		--mai-ad-max-width: var(--mai-ad-max-width-mobile, var(--mai-ad-max-width-desktop, unset));
+		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-mobile, var(--mai-ad-aspect-ratio-desktop, 0));
 	}
 }
 
 @media only screen and (min-width: 600px) and (max-width: 999px) {
 
 	.mai-ad {
-		--mai-ad-max-width: var(--mai-ad-max-width-tablet, unset);
-		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-tablet, unset);
+		--mai-ad-max-width: var(--mai-ad-max-width-tablet, var(--mai-ad-max-width-desktop, unset));
+		--mai-ad-aspect-ratio: var(--mai-ad-aspect-ratio-tablet, var(--mai-ad-aspect-ratio-desktop, 0));
 	}
 }
 
