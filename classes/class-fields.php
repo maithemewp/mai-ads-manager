@@ -25,12 +25,32 @@ class Mai_Ads_Manager_Fields {
 	 */
 	function hooks() {
 		add_action( 'wp_head', [ $this, 'header' ] );
+		add_action( 'acf/render_field/key=maiam_header', [ $this, 'admin_css' ] );
 		add_filter( 'acf/load_field/key=maiam_header', [ $this, 'load_header' ] );
 		add_filter( 'acf/load_field/key=maiam_label', [ $this, 'load_label' ] );
 		add_filter( 'acf/load_field/key=maiam_breakpoints', [ $this, 'load_breakpoints' ] );
 		add_filter( 'acf/load_field/key=maiam_ads', [ $this, 'load_ads' ] );
 		add_filter( 'acf/prepare_field/key=maiam_id', [ $this, 'prepare_id' ] );
 		add_action( 'acf/save_post', [ $this, 'save' ], 99 );
+	}
+
+	/**
+	 * Adds custom CSS in the first field.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array
+	 */
+	function admin_css( $field ) {
+		echo '<style>
+		.acf-field-maiam-ads .acf-repeater .acf-actions .button-primary {
+			display: block;
+			width: 100%;
+			margin: 16px 0 0;
+			padding: 8px 16px;
+			text-align: center;
+		}
+		</style>';
 	}
 
 	/**
