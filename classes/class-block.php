@@ -116,7 +116,7 @@ class Mai_Ad_Block {
 			}
 		} else {
 			// TODO: TEST WITH NO ADS!
-			$field['instructions'] = sprintf( __( 'No ads available. Go %s now.', 'mai-ad-manager' ), sprintf( '<a href="%s">%s</a>', '#', __( 'create a new ad', 'mai-ad-manager' ) ) );
+			$field['instructions'] = sprintf( __( 'No ads available.%sGo %s now.', 'mai-ad-manager' ), '<br />', sprintf( '<a href="%s">%s</a>', '#', __( 'create a new ad', 'mai-ad-manager' ) ) );
 		}
 
 		return $field;
