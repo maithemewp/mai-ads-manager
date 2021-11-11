@@ -67,7 +67,7 @@ class Mai_Ads_Manager_Fields {
 			return;
 		}
 
-		echo wp_kses_post( $header );
+		echo $header;
 	}
 
 	/**
@@ -221,11 +221,18 @@ class Mai_Ads_Manager_Fields {
 		}
 
 		// Get formatted data.
+		$header      = get_field( 'maiam_header', 'option' );
+		$header      = current_user_can( 'unfiltered_html' ) ? trim( $header ) : wp_kses_post( trim( $header ) );
+		$label       = esc_html( get_field( 'maiam_label', 'option' ) );
+		$breakpoints = get_field( 'maiam_breakpoints', 'option' );
+		$ads         = $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) );
+
+		// Build options array.
 		$options = [
-			'header'      => wp_kses_post( get_field( 'maiam_header', 'option' ) ),
-			'label'       => esc_html( get_field( 'maiam_label', 'option' ) ),
-			'breakpoints' => get_field( 'maiam_breakpoints', 'option' ),
-			'ads'         => $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) ),
+			'header'      => $header,
+			'label'       => $label,
+			'breakpoints' => $breakpoints,
+			'ads'         => $ads,
 		];
 
 		update_option( 'mai_ads_manager', $options );

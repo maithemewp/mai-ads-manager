@@ -65,7 +65,7 @@ function maiam_get_parsed_ad_args( $args ) {
 
 	$args['label']   = wp_kses_post( trim( $args['label'] ) );
 	$args['name']    = wp_kses_post( trim( $args['name'] ) );
-	$args['code']    = wp_kses_post( trim( $args['code'] ) );
+	$args['code']    = current_user_can( 'unfiltered_html' ) ? trim( $args['code'] ) : wp_kses_post( trim( $args['code'] ) );
 	$args['desktop'] = array_map( 'esc_html', $args['desktop'] );
 	$args['tablet']  = array_map( 'esc_html', $args['tablet'] );
 	$args['mobile']  = array_map( 'esc_html', $args['mobile'] );
