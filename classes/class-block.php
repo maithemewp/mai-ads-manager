@@ -49,6 +49,13 @@ class Mai_Ad_Block {
 				'category'        => 'widget',
 				'keywords'        => [ 'ad', 'mai' ],
 				'icon'            => 'media-code',
+				'mode'            => 'preview',
+				'enqueue_assets'  => function() {
+					if ( is_admin() ) {
+						$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+						wp_enqueue_style( 'mai-ad-editor', MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-editor{$suffix}.css" );
+					}
+				},
 				'supports'        => [
 					'align' => [],
 					'mode'  => false,
