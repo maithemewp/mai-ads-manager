@@ -47,7 +47,7 @@ class Mai_Ads_Manager_Register {
 
 		acf_add_local_field_group(
 			[
-				'key'    => 'group_615617fc82546',
+				'key'    => 'maiam_options',
 				'title'  => __( 'Mai Ads Manager', 'mai-ads-manager' ),
 				'fields' => [
 					[
@@ -257,7 +257,7 @@ class Mai_Ads_Manager_Register {
 
 		acf_add_local_field_group(
 			[
-				'key'    => 'group_615f636b97886',
+				'key'    => 'maiam_ad_block',
 				'title'  => __( 'Mai Ad', 'mai-ads-manager' ),
 				'fields' => [
 					[
