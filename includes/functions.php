@@ -36,13 +36,14 @@ function maiam_get_ad( $args ) {
  *
  * @access private
  *
- * @param array $args Ad args. See Mai_Ad class for available args.
+ * @param array $args  Ad args. See Mai_Ad class for available args.
+ * @param bool  $front Whether this is for front end dislay or admin fields.
  *
  * @since 0.1.0
  *
  * @return string
  */
-function maiam_get_parsed_ad_args( $args ) {
+function maiam_get_parsed_ad_args( $args, $front = false ) {
 	$args = wp_parse_args( $args,
 		[
 			'label'   => maiam_get_option( 'label', '' ),
@@ -65,7 +66,7 @@ function maiam_get_parsed_ad_args( $args ) {
 
 	$args['label']   = wp_kses_post( trim( $args['label'] ) );
 	$args['name']    = wp_kses_post( trim( $args['name'] ) );
-	$args['code']    = current_user_can( 'unfiltered_html' ) ? trim( $args['code'] ) : wp_kses_post( trim( $args['code'] ) );
+	$args['code']    = $front || current_user_can( 'unfiltered_html' ) ? trim( $args['code'] ) : wp_kses_post( trim( $args['code'] ) );
 	$args['desktop'] = array_map( 'esc_html', $args['desktop'] );
 	$args['tablet']  = array_map( 'esc_html', $args['tablet'] );
 	$args['mobile']  = array_map( 'esc_html', $args['mobile'] );

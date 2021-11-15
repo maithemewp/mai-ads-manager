@@ -21,7 +21,7 @@ class Mai_Ad {
 	 * @return void
 	 */
 	public function __construct( $args ) {
-		$this->args = maiam_get_parsed_ad_args( $args );
+		$this->args = maiam_get_parsed_ad_args( $args, true );
 	}
 
 	/**
