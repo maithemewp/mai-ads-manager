@@ -209,7 +209,7 @@ function maiam_get_default_breakpoints() {
 /**
  * Gets settings link.
  *
- * @since TBD
+ * @since 0.4.0
  *
  * @return string
  */
