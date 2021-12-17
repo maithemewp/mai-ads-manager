@@ -44,7 +44,7 @@ class Mai_Ad_Block {
 			[
 				'name'            => 'mai-ad',
 				'title'           => __( 'Mai Ad', 'mai-ad-manager' ),
-				'description'     => __( 'A custom columns block.', 'mai-ad-manager' ),
+				'description'     => __( 'A custom ad block.', 'mai-ad-manager' ),
 				'render_callback' => [ $this, 'do_ad' ],
 				'category'        => 'widget',
 				'keywords'        => [ 'ad', 'mai' ],

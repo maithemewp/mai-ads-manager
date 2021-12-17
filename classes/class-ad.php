@@ -7,9 +7,16 @@ class Mai_Ad {
 	/**
 	 * Args.
 	 *
-	 * @var array $args
+	 * @var array $args.
 	 */
 	public $args;
+
+	/**
+	 * Has aspect ratio.
+	 *
+	 * @var bool $has_ratio.
+	 */
+	public $has_ratio;
 
 	/**
 	 * Mai_Ad constructor.
@@ -21,7 +28,8 @@ class Mai_Ad {
 	 * @return void
 	 */
 	public function __construct( $args ) {
-		$this->args = maiam_get_parsed_ad_args( $args, true );
+		$this->args  = maiam_get_parsed_ad_args( $args, true );
+		$this->style = $this->get_style();
 	}
 
 	/**
@@ -59,8 +67,8 @@ class Mai_Ad {
 	 */
 	function get_ad() {
 		$html  = $this->get_css();
-		$html .= sprintf( '<div class="mai-ad"%s%s>', $this->get_label(), $this->get_style() );
-			$html .= '<div class="mai-ad-inner">';
+		$html .= sprintf( '<div class="mai-ad"%s%s>', $this->get_label(), $this->style );
+			$html .= sprintf( '<div class="mai-ad-inner%s">', $this->has_ratio ? ' mai-ad-has-ratio' : '' );
 				$html .= '<div class="mai-ad-content">';
 					$html .= $this->args['code'];
 				$html .= '</div>';
@@ -121,8 +129,9 @@ class Mai_Ad {
 	 * @return string
 	 */
 	function get_style() {
-		$styles = '';
-		$breaks = [
+		$this->has_ratio = false;
+		$styles          = '';
+		$breaks          = [
 			'mobile',
 			'tablet',
 			'desktop',
@@ -134,6 +143,7 @@ class Mai_Ad {
 
 				if ( $this->args[ $break ]['height'] ) {
 					$styles .= sprintf( '--mai-ad-aspect-ratio-%s:%s/%s;', $break, $this->args[ $break ]['width'], $this->args[ $break ]['height'] );
+					$this->has_ratio = true;
 				}
 			}
 		}
