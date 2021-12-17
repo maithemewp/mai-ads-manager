@@ -284,7 +284,7 @@ class Mai_Ads_Manager_Register {
 						'key'       => 'maiam_ad_settings_link',
 						'name'      => '',
 						'type'      => 'message',
-						'message'   => maiam_get_settings_link( __( 'Edit Ads', 'mai-ads-manager' ) ),
+						'message'   => maiam_get_settings_link( __( 'Ads Manager →', 'mai-ads-manager' ) ),
 						'new_lines' => '',
 						'esc_html'  => 0,
 					],
