@@ -279,6 +279,15 @@ class Mai_Ads_Manager_Register {
 						'message' => __( 'Hide label', 'mai-ads-manager' ),
 						'ui'    => 0,
 					],
+					[
+						'label'     => '',
+						'key'       => 'maiam_ad_settings_link',
+						'name'      => '',
+						'type'      => 'message',
+						'message'   => maiam_get_settings_link( __( 'Edit Ads', 'mai-ads-manager' ) ),
+						'new_lines' => '',
+						'esc_html'  => 0,
+					],
 				],
 				'location' => [
 					[
@@ -306,9 +315,7 @@ class Mai_Ads_Manager_Register {
 	 * @return  array  associative array of plugin action links
 	 */
 	function add_settings_link( $actions, $plugin_file, $plugin_data, $context ) {
-		$url                 = admin_url( sprintf( '%s.php?page=mai-ads-manager', class_exists( 'Mai_Engine' ) ? 'admin' : 'options-general' ) );
-		$link                = sprintf( '<a href="%s">%s</a>', $url, __( 'Settings', 'mai-ads-manager' ) );
-		$actions['settings'] = $link;
+		$actions['settings'] = maiam_get_settings_link( __( 'Settings', 'mai-ads-manager' ) );
 
 		return $actions;
 	}
