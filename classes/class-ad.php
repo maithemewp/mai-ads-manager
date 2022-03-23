@@ -66,8 +66,14 @@ class Mai_Ad {
 	 * @return string
 	 */
 	function get_ad() {
-		$html  = $this->get_css();
-		$html .= sprintf( '<div class="mai-ad"%s%s>', $this->get_label(), $this->style );
+		$class = 'mai-ad';
+
+		if ( $this->args['class'] ) {
+			$class .= ' ' . trim( $this->args['class'] );
+		}
+
+		$html = sprintf( '<div class="%s"%s%s>', $class, $this->get_label(), $this->style );
+			$html .= $this->get_css();
 			$html .= sprintf( '<div class="mai-ad-inner%s">', $this->has_ratio ? ' mai-ad-has-ratio' : '' );
 				$html .= '<div class="mai-ad-content">';
 					$html .= $this->args['code'];
@@ -91,8 +97,6 @@ class Mai_Ad {
 		if ( $loaded ) {
 			return;
 		}
-
-		// TODO: Background on ad content should only show if max-width has value.
 
 		$suffix       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$desktop      = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad{$suffix}.css";

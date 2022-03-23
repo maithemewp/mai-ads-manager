@@ -32,7 +32,7 @@
 
 .mai-ad-has-ratio .mai-ad-content {
 	flex: 1;
-	background: var(--mai-ad-background, repeating-conic-gradient(rgba(0, 0, 0, 0.03) 0% 25%, rgba(0, 0, 0, 0.01) 0% 50%) 50% / 20px 20px);
+	background: var(--mai-ad-background, unset);
 	background-position: top left;
 }
 

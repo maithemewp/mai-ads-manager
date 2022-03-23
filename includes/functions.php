@@ -46,6 +46,7 @@ function maiam_get_ad( $args ) {
 function maiam_get_parsed_ad_args( $args, $front = false ) {
 	$args = wp_parse_args( $args,
 		[
+			'class'   => '',
 			'label'   => maiam_get_option( 'label', '' ),
 			'name'    => '',
 			'code'    => '',
@@ -64,6 +65,7 @@ function maiam_get_parsed_ad_args( $args, $front = false ) {
 		);
 	}
 
+	$args['class']   = esc_html( $args['class'] );
 	$args['label']   = wp_kses_post( trim( $args['label'] ) );
 	$args['name']    = wp_kses_post( trim( $args['name'] ) );
 	$args['code']    = $front || current_user_can( 'unfiltered_html' ) ? trim( $args['code'] ) : wp_kses_post( trim( $args['code'] ) );
