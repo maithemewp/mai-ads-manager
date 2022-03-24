@@ -284,7 +284,7 @@ class Mai_Ads_Manager_Fields {
 		foreach ( $ads as $index => $ad ) {
 			$id = isset( $ad['id'] ) && $ad['id'] ? esc_html( $ad['id'] ) : $this->get_random_id();
 
-			unset( $ads[ $index ]['id'] );
+			unset( $ad['id'] );
 
 			$data[ $id ] = maiam_get_parsed_ad_args( $ad );
 
