@@ -24,14 +24,14 @@ class Mai_Ads_Manager_Fields {
 	 * @return void
 	 */
 	function hooks() {
-		add_action( 'wp_head', [ $this, 'header' ] );
-		add_action( 'acf/render_field/key=maiam_header', [ $this, 'admin_css' ] );
-		add_filter( 'acf/load_field/key=maiam_header', [ $this, 'load_header' ] );
-		add_filter( 'acf/load_field/key=maiam_label', [ $this, 'load_label' ] );
+		add_action( 'wp_head',                              [ $this, 'header' ] );
+		add_action( 'acf/render_field/key=maiam_header',    [ $this, 'admin_css' ] );
+		add_filter( 'acf/load_field/key=maiam_header',      [ $this, 'load_header' ] );
+		add_filter( 'acf/load_field/key=maiam_label',       [ $this, 'load_label' ] );
 		add_filter( 'acf/load_field/key=maiam_breakpoints', [ $this, 'load_breakpoints' ] );
-		add_filter( 'acf/load_field/key=maiam_ads', [ $this, 'load_ads' ] );
-		add_filter( 'acf/prepare_field/key=maiam_id', [ $this, 'prepare_id' ] );
-		add_action( 'acf/save_post', [ $this, 'save' ], 99 );
+		add_filter( 'acf/load_field/key=maiam_ads',         [ $this, 'load_ads' ] );
+		add_filter( 'acf/prepare_field/key=maiam_id',       [ $this, 'prepare_id' ] );
+		add_action( 'acf/save_post',                        [ $this, 'save' ], 99 );
 	}
 
 	/**
@@ -174,9 +174,10 @@ class Mai_Ads_Manager_Fields {
 	}
 
 	/**
-	 * Sets ID feild as readonly and gets random string if value is empty.
+	 * Sets ID feild as readonly.
 	 *
 	 * @since 0.1.0
+	 * @since 0.6.0 Can't set random id here because it duplicates the value per row.
 	 *
 	 * @param array $field The field data.
 	 *
@@ -184,10 +185,6 @@ class Mai_Ads_Manager_Fields {
 	 */
 	function prepare_id( $field ) {
 		$field['readonly'] = true;
-
-		if ( ! $field['value'] ) {
-			$field['value'] = $this->get_random_id();
-		};
 
 		return $field;
 	}
@@ -284,10 +281,10 @@ class Mai_Ads_Manager_Fields {
 
 		$data = [];
 
-		foreach ( $ads as $ad ) {
-			$id = isset( $ad['id'] ) ? $ad['id'] : $this->get_random_id();
+		foreach ( $ads as $index => $ad ) {
+			$id = isset( $ad['id'] ) && $ad['id'] ? esc_html( $ad['id'] ) : $this->get_random_id();
 
-			unset( $ad['id'] );
+			unset( $ads[ $index ]['id'] );
 
 			$data[ $id ] = maiam_get_parsed_ad_args( $ad );
 

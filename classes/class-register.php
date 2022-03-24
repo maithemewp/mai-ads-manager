@@ -236,7 +236,7 @@ class Mai_Ads_Manager_Register {
 								'name'         => 'id',
 								'type'         => 'text',
 								'instructions' => __( 'Reference ID. Not editable.', 'mai-ads-manager' ),
-								'required'     => 1,
+								'required'     => 0,
 								'wrapper'      => [
 									'width' => '100',
 								],
