@@ -75,7 +75,7 @@ class Mai_Ads_Manager_Fields {
 	/**
 	 * Outputs footer.
 	 *
-	 * @since TBD
+	 * @since 0.7.0
 	 *
 	 * @return void
 	 */
@@ -106,7 +106,7 @@ class Mai_Ads_Manager_Fields {
 	/**
 	 * Loads footer field value from our custom option.
 	 *
-	 * @since TBD
+	 * @since 0.7.0
 	 *
 	 * @param array $field The field data.
 	 *
