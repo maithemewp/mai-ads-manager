@@ -59,6 +59,13 @@ class Mai_Ads_Manager_Register {
 						'instructions' => __( 'Add any global header code here.', 'mai-ads-manager' ),
 					],
 					[
+						'label'        => __( 'Footer Code', 'mai-ads-manager' ),
+						'key'          => 'maiam_footer',
+						'name'         => 'maiam_footer',
+						'type'         => 'textarea',
+						'instructions' => __( 'Add any global footer code here.', 'mai-ads-manager' ),
+					],
+					[
 						'label'         => __( 'Label', 'mai-ads-manager' ),
 						'key'           => 'maiam_label',
 						'name'          => 'maiam_label',

@@ -25,8 +25,10 @@ class Mai_Ads_Manager_Fields {
 	 */
 	function hooks() {
 		add_action( 'wp_head',                              [ $this, 'header' ] );
+		add_action( 'wp_footer',                            [ $this, 'footer' ], 20 );
 		add_action( 'acf/render_field/key=maiam_header',    [ $this, 'admin_css' ] );
 		add_filter( 'acf/load_field/key=maiam_header',      [ $this, 'load_header' ] );
+		add_filter( 'acf/load_field/key=maiam_footer',      [ $this, 'load_footer' ] );
 		add_filter( 'acf/load_field/key=maiam_label',       [ $this, 'load_label' ] );
 		add_filter( 'acf/load_field/key=maiam_breakpoints', [ $this, 'load_breakpoints' ] );
 		add_filter( 'acf/load_field/key=maiam_ads',         [ $this, 'load_ads' ] );
@@ -71,6 +73,23 @@ class Mai_Ads_Manager_Fields {
 	}
 
 	/**
+	 * Outputs footer.
+	 *
+	 * @since TBD
+	 *
+	 * @return void
+	 */
+	function footer() {
+		$footer = maiam_get_option( 'footer', '' );
+
+		if ( ! $footer ) {
+			return;
+		}
+
+		echo $footer;
+	}
+
+	/**
 	 * Loads header field value from our custom option.
 	 *
 	 * @since 0.1.0
@@ -81,6 +100,20 @@ class Mai_Ads_Manager_Fields {
 	 */
 	function load_header( $field ) {
 		$field['value'] = maiam_get_option( 'header', '' );
+		return $field;
+	}
+
+	/**
+	 * Loads footer field value from our custom option.
+	 *
+	 * @since TBD
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
+	function load_footer( $field ) {
+		$field['value'] = maiam_get_option( 'footer', '' );
 		return $field;
 	}
 
@@ -220,6 +253,8 @@ class Mai_Ads_Manager_Fields {
 		// Get formatted data.
 		$header      = get_field( 'maiam_header', 'option' );
 		$header      = current_user_can( 'unfiltered_html' ) ? trim( $header ) : wp_kses_post( trim( $header ) );
+		$footer      = get_field( 'maiam_footer', 'option' );
+		$footer      = current_user_can( 'unfiltered_html' ) ? trim( $footer ) : wp_kses_post( trim( $footer ) );
 		$label       = esc_html( get_field( 'maiam_label', 'option' ) );
 		$breakpoints = get_field( 'maiam_breakpoints', 'option' );
 		$ads         = $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) );
@@ -227,6 +262,7 @@ class Mai_Ads_Manager_Fields {
 		// Build options array.
 		$options = [
 			'header'      => $header,
+			'footer'      => $footer,
 			'label'       => $label,
 			'breakpoints' => $breakpoints,
 			'ads'         => $ads,
@@ -246,12 +282,14 @@ class Mai_Ads_Manager_Fields {
 		// To delete.
 		$options = [
 			'options_maiam_header',
+			'options_maiam_footer',
 			'options_maiam_label',
 			'options_maiam_breakpoints',
 			'options_maiam_breakpoints_tablet',
 			'options_maiam_breakpoints_mobile',
 			'options_maiam_ads',
 			'_options_maiam_header',
+			'_options_maiam_footer',
 			'_options_maiam_label',
 			'_options_maiam_breakpoints',
 			'_options_maiam_breakpoints_tablet',
