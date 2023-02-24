@@ -258,6 +258,13 @@ class Mai_Ads_Manager_Fields {
 		$label       = esc_html( get_field( 'maiam_label', 'option' ) );
 		$breakpoints = get_field( 'maiam_breakpoints', 'option' );
 		$ads         = $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) );
+		$import      = trim( get_field( 'maiam_import', 'option' ) );
+		$import      = $import ? json_decode( wp_unslash( $import ), true ) : [];
+
+		// Import ads.
+		if ( $import ) {
+			$ads = $import;
+		}
 
 		// Build options array.
 		$options = [
@@ -288,6 +295,8 @@ class Mai_Ads_Manager_Fields {
 			'options_maiam_breakpoints_tablet',
 			'options_maiam_breakpoints_mobile',
 			'options_maiam_ads',
+			'options_maiam_import',
+			'options_maiam_export',
 			'_options_maiam_header',
 			'_options_maiam_footer',
 			'_options_maiam_label',
@@ -295,6 +304,8 @@ class Mai_Ads_Manager_Fields {
 			'_options_maiam_breakpoints_tablet',
 			'_options_maiam_breakpoints_mobile',
 			'_options_maiam_ads',
+			'_options_maiam_import',
+			'_options_maiam_export',
 		];
 
 		// Delete remaining options manually.
@@ -324,7 +335,14 @@ class Mai_Ads_Manager_Fields {
 
 			unset( $ad['id'] );
 
-			$data[ $id ] = maiam_get_parsed_ad_args( $ad );
+			$args = maiam_get_parsed_ad_args( $ad );
+
+			// Bail if not name and code, otherwise we have an empty row in the ACF UI.
+			if ( ! ( $args['name'] && $args['code'] ) ) {
+				continue;
+			}
+
+			$data[ $id ] = $args;
 
 			// This is global and shouldn't be saved to the db for each ad.
 			unset( $data[ $id ]['label'] );
@@ -346,4 +364,3 @@ class Mai_Ads_Manager_Fields {
 		return substr( str_shuffle( str_repeat( $x='0123456789abcdefghijklmnopqrstuvwxyz', ceil( $length / strlen( $x ) ) ) ), 1, $length );
 	}
 }
-

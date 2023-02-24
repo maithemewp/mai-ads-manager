@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 TBD
+* Added: Import/Export ads via copy and paste.
+* Fixed: No longer loads empy ad that you have to delete prior to saving.
+
 ## 0.7.0 (8/5/22)
 * Added: Footer code setting for global scripts.
 

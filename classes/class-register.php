@@ -24,7 +24,8 @@ class Mai_Ads_Manager_Register {
 	 * @return void
 	 */
 	function hooks() {
-		add_action( 'acf/init', [ $this, 'register' ] );
+		add_action( 'acf/init',                        [ $this, 'register' ] );
+		add_filter( 'acf/load_field/key=maiam_export', [ $this, 'load_export_field' ] );
 		add_filter( 'plugin_action_links_mai-ads-manager/mai-ads-manager.php', [ $this, 'add_settings_link' ], 10, 4 );
 	}
 
@@ -52,58 +53,9 @@ class Mai_Ads_Manager_Register {
 				'title'  => __( 'Mai Ads Manager', 'mai-ads-manager' ),
 				'fields' => [
 					[
-						'label'        => __( 'Header Code', 'mai-ads-manager' ),
-						'key'          => 'maiam_header',
-						'name'         => 'maiam_header',
-						'type'         => 'textarea',
-						'instructions' => __( 'Add any global header code here.', 'mai-ads-manager' ),
-					],
-					[
-						'label'        => __( 'Footer Code', 'mai-ads-manager' ),
-						'key'          => 'maiam_footer',
-						'name'         => 'maiam_footer',
-						'type'         => 'textarea',
-						'instructions' => __( 'Add any global footer code here.', 'mai-ads-manager' ),
-					],
-					[
-						'label'         => __( 'Label', 'mai-ads-manager' ),
-						'key'           => 'maiam_label',
-						'name'          => 'maiam_label',
-						'type'          => 'text',
-						'instructions'  => __( 'Optional label to display above ads.', 'mai-ads-manager' ),
-						'default_value' => __( 'Advertisement', 'mai-ads-manager' ),
-					],
-					[
-						'label'        => __( 'Breakpoints', 'mai-ads-manager' ),
-						'instructions' => __( 'The max screen width to display ad container in these dimensions. Leave empty to use theme default.', 'mai-ads-manager' ),
-						'key'          => 'maiam_breakpoints',
-						'name'         => 'maiam_breakpoints',
-						'type'         => 'group',
-						'layout'       => 'block',
-						'sub_fields'   => [
-							[
-								'key'           => 'maiam_tablet_breakpoint',
-								'name'          => 'tablet',
-								'type'          => 'number',
-								'instructions'  => __( 'Tablet', 'mai-ads-manager' ),
-								'placeholder'   => maiam_get_default_breakpoint( 'tablet' ),
-								'append'        => 'px',
-								'wrapper'       => [
-									'width' => '50',
-								],
-							],
-							[
-								'key'           => 'maiam_mobile_breakpoint',
-								'name'          => 'mobile',
-								'type'          => 'number',
-								'instructions'  => __( 'Mobile', 'mai-ads-manager' ),
-								'placeholder'   => maiam_get_default_breakpoint( 'mobile' ),
-								'append'        => 'px',
-								'wrapper'       => [
-									'width' => '50',
-								],
-							],
-						],
+						'label' => __( 'Ads', 'mai-ads-manager' ),
+						'key'   => 'maiam_tab_ads',
+						'type'  => 'tab',
 					],
 					[
 						'label'        => __( 'Ads', 'mai-ads-manager' ),
@@ -250,6 +202,93 @@ class Mai_Ads_Manager_Register {
 							],
 						],
 					],
+					[
+						'label' => __( 'Scripts', 'mai-ads-manager' ),
+						'key'   => 'maiam_tab_scripts',
+						'type'  => 'tab',
+					],
+					[
+						'label'        => __( 'Header Code', 'mai-ads-manager' ),
+						'key'          => 'maiam_header',
+						'name'         => 'maiam_header',
+						'type'         => 'textarea',
+						'instructions' => __( 'Add any global header code here.', 'mai-ads-manager' ),
+					],
+					[
+						'label'        => __( 'Footer Code', 'mai-ads-manager' ),
+						'key'          => 'maiam_footer',
+						'name'         => 'maiam_footer',
+						'type'         => 'textarea',
+						'instructions' => __( 'Add any global footer code here.', 'mai-ads-manager' ),
+					],
+					[
+						'label'         => __( 'Label', 'mai-ads-manager' ),
+						'key'           => 'maiam_label',
+						'name'          => 'maiam_label',
+						'type'          => 'text',
+						'instructions'  => __( 'Optional label to display above ads.', 'mai-ads-manager' ),
+						'default_value' => __( 'Advertisement', 'mai-ads-manager' ),
+					],
+					[
+						'label'        => __( 'Breakpoints', 'mai-ads-manager' ),
+						'instructions' => __( 'The max screen width to display ad container in these dimensions. Leave empty to use theme default.', 'mai-ads-manager' ),
+						'key'          => 'maiam_breakpoints',
+						'name'         => 'maiam_breakpoints',
+						'type'         => 'group',
+						'layout'       => 'block',
+						'sub_fields'   => [
+							[
+								'key'           => 'maiam_tablet_breakpoint',
+								'name'          => 'tablet',
+								'type'          => 'number',
+								'instructions'  => __( 'Tablet', 'mai-ads-manager' ),
+								'placeholder'   => maiam_get_default_breakpoint( 'tablet' ),
+								'append'        => 'px',
+								'wrapper'       => [
+									'width' => '50',
+								],
+							],
+							[
+								'key'           => 'maiam_mobile_breakpoint',
+								'name'          => 'mobile',
+								'type'          => 'number',
+								'instructions'  => __( 'Mobile', 'mai-ads-manager' ),
+								'placeholder'   => maiam_get_default_breakpoint( 'mobile' ),
+								'append'        => 'px',
+								'wrapper'       => [
+									'width' => '50',
+								],
+							],
+						],
+					],
+					[
+						'label'        => __( 'Import', 'mai-ads-manager' ),
+						'key'          => 'maiam_tab_import',
+						'type'         => 'tab',
+					],
+					[
+						'label'        => __( 'Import', 'mai-ads-manager' ),
+						'instructions' => __( 'Paste the export code from another website and hit the Import button to import all ads.', 'mai-ads-manager' ),
+						'key'          => 'maiam_import',
+						'name'         => 'maiam_import',
+						'type'         => 'textarea',
+						'rows'         => 10,
+						'new_lines'    => '',
+					],
+					[
+						'label'        => __( 'Export', 'mai-ads-manager' ),
+						'key'          => 'maiam_tab_export',
+						'type'         => 'tab',
+					],
+					[
+						'label'        => __( 'Export', 'mai-ads-manager' ),
+						'instructions' => __( 'Copy and paste this code into the Import section of another website to migrate all ads.', 'mai-ads-manager' ),
+						'key'          => 'maiam_export',
+						'name'         => 'maiam_export',
+						'type'         => 'textarea',
+						'rows'         => 10,
+						'new_lines'    => '',
+					],
 				],
 				'location' => [
 					[
@@ -279,21 +318,21 @@ class Mai_Ads_Manager_Register {
 						'allow_null'   => 1,
 					],
 					[
-						'label' => '',
-						'key'   => 'maiam_ad_hide_label',
-						'name'  => 'hide_label',
-						'type'  => 'true_false',
-						'message' => __( 'Hide label', 'mai-ads-manager' ),
-						'ui'    => 0,
+						'label'        => '',
+						'key'          => 'maiam_ad_hide_label',
+						'name'         => 'hide_label',
+						'type'         => 'true_false',
+						'message'      => __( 'Hide label', 'mai-ads-manager' ),
+						'ui'           => 0,
 					],
 					[
-						'label'     => '',
-						'key'       => 'maiam_ad_settings_link',
-						'name'      => '',
-						'type'      => 'message',
-						'message'   => maiam_get_settings_link( __( 'Ads Manager →', 'mai-ads-manager' ) ),
-						'new_lines' => '',
-						'esc_html'  => 0,
+						'label'        => '',
+						'key'          => 'maiam_ad_settings_link',
+						'name'         => '',
+						'type'         => 'message',
+						'message'      => maiam_get_settings_link( __( 'Ads Manager →', 'mai-ads-manager' ) ),
+						'new_lines'    => '',
+						'esc_html'     => 0,
 					],
 				],
 				'location' => [
@@ -307,6 +346,22 @@ class Mai_Ads_Manager_Register {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Loads JSON ads values for copying.
+	 *
+	 * @since TBD
+	 *
+	 * @param array $field
+	 *
+	 * @return array
+	 */
+	function load_export_field( $field ) {
+		$field['value']    = wp_json_encode( (array) maiam_get_option( 'ads' ) );
+		$field['readonly'] = 'readonly';
+
+		return $field;
 	}
 
 	/**
