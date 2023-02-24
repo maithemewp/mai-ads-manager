@@ -222,6 +222,11 @@ class Mai_Ads_Manager_Register {
 						'instructions' => __( 'Add any global footer code here.', 'mai-ads-manager' ),
 					],
 					[
+						'label'        => __( 'Settings', 'mai-ads-manager' ),
+						'key'          => 'maiam_tab_settings',
+						'type'         => 'tab',
+					],
+					[
 						'label'         => __( 'Label', 'mai-ads-manager' ),
 						'key'           => 'maiam_label',
 						'name'          => 'maiam_label',
