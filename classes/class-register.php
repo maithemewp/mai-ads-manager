@@ -53,7 +53,7 @@ class Mai_Ads_Manager_Register {
 				'title'  => __( 'Mai Ads Manager', 'mai-ads-manager' ),
 				'fields' => [
 					[
-						'label' => __( 'Ads', 'mai-ads-manager' ),
+						'label' => __( 'Ad Code', 'mai-ads-manager' ),
 						'key'   => 'maiam_tab_ads',
 						'type'  => 'tab',
 					],
