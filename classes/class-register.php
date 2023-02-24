@@ -356,7 +356,7 @@ class Mai_Ads_Manager_Register {
 	/**
 	 * Loads JSON ads values for copying.
 	 *
-	 * @since TBD
+	 * @since 0.8.0
 	 *
 	 * @param array $field
 	 *

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.0 TBD
+## 0.8.0 0.8.0
 * Added: Import/Export ads via copy and paste.
 * Fixed: No longer loads empy ad that you have to delete prior to saving.
 
