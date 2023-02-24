@@ -372,14 +372,14 @@ class Mai_Ads_Manager_Register {
 	/**
 	 * Return the plugin action links.  This will only be called if the plugin is active.
 	 *
-	 * @since   0.2.0
+	 * @since 0.2.0
 	 *
-	 * @param   array   $actions      Associative array of action names to anchor tags
-	 * @param   string  $plugin_file  Plugin file name, ie my-plugin/my-plugin.php
-	 * @param   array   $plugin_data  Associative array of plugin data from the plugin file headers
-	 * @param   string  $context      Plugin status context, ie 'all', 'active', 'inactive', 'recently_active'
+	 * @param array  $actions     Associative array of action names to anchor tags
+	 * @param string $plugin_file Plugin file name, ie my-plugin/my-plugin.php
+	 * @param array  $plugin_data Associative array of plugin data from the plugin file headers
+	 * @param string $context     Plugin status context, ie 'all', 'active', 'inactive', 'recently_active'
 	 *
-	 * @return  array  associative array of plugin action links
+	 * @return array associative array of plugin action links
 	 */
 	function add_settings_link( $actions, $plugin_file, $plugin_data, $context ) {
 		$actions['settings'] = maiam_get_settings_link( __( 'Settings', 'mai-ads-manager' ) );
