@@ -81,6 +81,9 @@ class Mai_Ad {
 			$html .= '</div>';
 		$html .= '</div>';
 
+		// Filters the ad content.
+		$html = apply_filters( 'maiam_ad', $html, $this->args );
+
 		return $html;
 	}
 
