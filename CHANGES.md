@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.1 (5/31/23)
+* Changed: Updated the updater.
+* Fixed: CSS not loading in some configurations.
+
 ## 0.9.0 (3/14/23)
 * Added: [Developers] New `maiam_ad` filter to modify markup on-demand.
 
