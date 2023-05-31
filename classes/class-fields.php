@@ -149,7 +149,6 @@ class Mai_Ads_Manager_Fields {
 		return $field;
 	}
 
-
 	/**
 	 * Loads ads repeater field values from our custom option.
 	 *

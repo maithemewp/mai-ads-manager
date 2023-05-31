@@ -216,7 +216,7 @@ function maiam_get_default_breakpoints() {
  * @return string
  */
 function maiam_get_settings_link( $text ) {
-	$url  = esc_url( admin_url( sprintf( '%s.php?page=mai-ads-manager', class_exists( 'Mai_Engine' ) ? 'admin': 'options-general' ) ) );
+	$url  = esc_url( admin_url( sprintf( '%s.php?page=mai-ads-manager', class_exists( 'Mai_Engine' ) ? 'admin' : 'options-general' ) ) );
 	$link = sprintf( '<a href="%s">%s</a>', $url, $text );
 
 	return $link;

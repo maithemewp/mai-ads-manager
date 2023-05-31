@@ -13,6 +13,9 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// Must be at the top of the file.
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
 /**
  * Main Mai_Ads_Manager Class.
  *
@@ -87,7 +90,6 @@ final class Mai_Ads_Manager {
 	 * @return  void
 	 */
 	private function setup_constants() {
-
 		// Plugin version.
 		if ( ! defined( 'MAI_ADS_MANAGER_VERSION' ) ) {
 			define( 'MAI_ADS_MANAGER_VERSION', '0.9.0' );
@@ -147,7 +149,7 @@ final class Mai_Ads_Manager {
 	 * @return  void
 	 */
 	public function hooks() {
-		add_action( 'plugins_loaded', [ $this, 'updater' ] );
+		add_action( 'plugins_loaded', [ $this, 'updater' ], 12 );
 		add_action( 'plugins_loaded', [ $this, 'classes' ], 99 );
 	}
 
@@ -163,18 +165,13 @@ final class Mai_Ads_Manager {
 	 * @return void
 	 */
 	public function updater() {
-		// Bail if current user cannot manage plugins.
-		if ( ! current_user_can( 'install_plugins' ) ) {
-			return;
-		}
-
 		// Bail if plugin updater is not loaded.
-		if ( ! class_exists( 'Puc_v4_Factory' ) ) {
+		if ( ! class_exists( 'YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
 			return;
 		}
 
 		// Setup the updater.
-		$updater = Puc_v4_Factory::buildUpdateChecker( 'https://github.com/maithemewp/mai-ads-manager/', __FILE__, 'mai-ads-manager' );
+		$updater = PucFactory::buildUpdateChecker( 'https://github.com/maithemewp/mai-ads-manager/', __FILE__, 'mai-ads-manager' );
 
 		// Maybe set github api token.
 		if ( defined( 'MAI_GITHUB_API_TOKEN' ) ) {
