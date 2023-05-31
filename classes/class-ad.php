@@ -101,18 +101,21 @@ class Mai_Ad {
 			return;
 		}
 
-		$suffix       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$desktop      = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad{$suffix}.css";
-		$mobile       = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-mobile{$suffix}.css";
-		$tablet       = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-tablet{$suffix}.css";
-		$mobile_break = maiam_get_breakpoint( 'mobile' );
-		$tablet_break = maiam_get_breakpoint( 'tablet' );
-		$css          = sprintf( '<link rel="stylesheet" href="%s" />', $desktop );
-		$css         .= sprintf( '<link rel="stylesheet" media="screen and (max-width: %spx)" href="%s" />', $mobile_break, $mobile );
-		$css         .= sprintf( '<link rel="stylesheet" media="screen and (min-width: %spx) and (max-width: %spx)" href="%s" />', ($mobile_break + 1), $tablet_break, $tablet );
+		$css   = '';
+		$admin = is_admin();
 
-		// For some reason CSS wasn't loading in the editor.
-		$loaded = ! is_admin() ? true : false;
+		if ( $admin || ( ! is_admin() && did_action( 'wp_body_open' ) ) ) {
+			$suffix       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			$desktop      = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad{$suffix}.css";
+			$mobile       = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-mobile{$suffix}.css";
+			$tablet       = MAI_ADS_MANAGER_PLUGIN_URL . "assets/css/mai-ad-tablet{$suffix}.css";
+			$mobile_break = maiam_get_breakpoint( 'mobile' );
+			$tablet_break = maiam_get_breakpoint( 'tablet' );
+			$css         .= sprintf( '<link rel="stylesheet" href="%s" />', $desktop );
+			$css         .= sprintf( '<link rel="stylesheet" media="screen and (max-width: %spx)" href="%s" />', $mobile_break, $mobile );
+			$css         .= sprintf( '<link rel="stylesheet" media="screen and (min-width: %spx) and (max-width: %spx)" href="%s" />', ($mobile_break + 1), $tablet_break, $tablet );
+			$loaded       = ! $admin; // Load on every block in admin.
+		}
 
 		return $css;
 	}
