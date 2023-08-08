@@ -51,10 +51,15 @@ class Mai_Ad {
 	 * Returns an ad.
 	 *
 	 * @since 0.1.0
+	 * @since 0.10.0 Added support for Hide Elements metabox in Mai Theme v2.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	function get() {
+		if ( function_exists( 'mai_is_element_hidden' ) && mai_is_element_hidden( 'mai_ads' ) ) {
+			return;
+		}
+
 		return $this->get_ad();
 	}
 
