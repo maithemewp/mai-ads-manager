@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.0 (8/8/23)
+* Added: Support for Hide Elements metabox in Mai Theme v2 to hide Mai Ads blocks anywhere the Hide Elements settings are supported.
+
 ## 0.9.1 (5/31/23)
 * Changed: Updated the updater.
 * Fixed: CSS not loading in some configurations.

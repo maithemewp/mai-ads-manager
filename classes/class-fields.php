@@ -34,6 +34,7 @@ class Mai_Ads_Manager_Fields {
 		add_filter( 'acf/load_field/key=maiam_ads',         [ $this, 'load_ads' ] );
 		add_filter( 'acf/prepare_field/key=maiam_id',       [ $this, 'prepare_id' ] );
 		add_action( 'acf/save_post',                        [ $this, 'save' ], 99 );
+		add_filter( 'acf/load_field/key=hide_elements',     [ $this, 'hide_elements' ], 20 );
 	}
 
 	/**
@@ -361,5 +362,20 @@ class Mai_Ads_Manager_Fields {
 	 */
 	function get_random_id( $length = 8 ) {
 		return substr( str_shuffle( str_repeat( $x='0123456789abcdefghijklmnopqrstuvwxyz', ceil( $length / strlen( $x ) ) ) ), 1, $length );
+	}
+
+	/**
+	 * Adds Mai Ads as an option to Hide Elements metabox in Mai Theme v2.
+	 *
+	 * @since 0.10.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return void
+	 */
+	function hide_elements( $field ) {
+		$field['choices'][ 'mai_ads' ] = __( 'Mai Ad Blocks', 'mai-ads-manager' );
+
+		return $field;
 	}
 }

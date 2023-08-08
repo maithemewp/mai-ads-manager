@@ -19,6 +19,7 @@
 
 .mai-ad-has-ratio {
 	display: flex;
+	align-items: center;
 }
 
 .mai-ad-has-ratio::before {
