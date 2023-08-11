@@ -267,6 +267,18 @@ class Mai_Ads_Manager_Register {
 						],
 					],
 					[
+						'label'         => __( 'Google Ads Manager', 'mai-ads-manager' ),
+						'instructions'  => '',
+						'key'           => 'maiam_gam',
+						'name'          => 'maiam_gam',
+						'type'          => 'true_false',
+						'message'       => __( 'Enable (GAM) Google Ads Manager features', 'mai-ads-manager' ),
+						'default_value' => 0,
+						'ui'            => 0,
+						'ui_on_text'    => '',
+						'ui_off_text'   => '',
+					],
+					[
 						'label'        => __( 'Import', 'mai-ads-manager' ),
 						'key'          => 'maiam_tab_import',
 						'type'         => 'tab',

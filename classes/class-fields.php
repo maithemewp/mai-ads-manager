@@ -31,6 +31,7 @@ class Mai_Ads_Manager_Fields {
 		add_filter( 'acf/load_field/key=maiam_footer',      [ $this, 'load_footer' ] );
 		add_filter( 'acf/load_field/key=maiam_label',       [ $this, 'load_label' ] );
 		add_filter( 'acf/load_field/key=maiam_breakpoints', [ $this, 'load_breakpoints' ] );
+		add_filter( 'acf/load_field/key=maiam_gam',         [ $this, 'load_gam' ] );
 		add_filter( 'acf/load_field/key=maiam_ads',         [ $this, 'load_ads' ] );
 		add_filter( 'acf/prepare_field/key=maiam_id',       [ $this, 'prepare_id' ] );
 		add_action( 'acf/save_post',                        [ $this, 'save' ], 99 );
@@ -151,6 +152,22 @@ class Mai_Ads_Manager_Fields {
 	}
 
 	/**
+	 * Loads GAM field value from our custom option.
+	 *
+	 * @since 0.11.0
+	 *
+	 * @param array $field The field data.
+	 *
+	 * @return array
+	 */
+	function load_gam( $field ) {
+		$gam            = maiam_get_option( 'gam' );
+		$gam            = isset( $gam['enabled'] ) ? (bool) $gam['enabled'] : false;
+		$field['value'] = $gam;
+		return $field;
+	}
+
+	/**
 	 * Loads ads repeater field values from our custom option.
 	 *
 	 * @since 0.1.0
@@ -257,6 +274,7 @@ class Mai_Ads_Manager_Fields {
 		$footer      = current_user_can( 'unfiltered_html' ) ? trim( $footer ) : wp_kses_post( trim( $footer ) );
 		$label       = esc_html( get_field( 'maiam_label', 'option' ) );
 		$breakpoints = get_field( 'maiam_breakpoints', 'option' );
+		$gam         = (bool) get_field( 'maiam_gam', 'option' );
 		$ads         = $this->get_formatted_data( (array) get_field( 'maiam_ads', 'option' ) );
 		$import      = trim( get_field( 'maiam_import', 'option' ) );
 		$import      = $import ? json_decode( wp_unslash( $import ), true ) : [];
@@ -272,6 +290,7 @@ class Mai_Ads_Manager_Fields {
 			'footer'      => $footer,
 			'label'       => $label,
 			'breakpoints' => $breakpoints,
+			'gam'         => [ 'enabled' => $gam ],
 			'ads'         => $ads,
 		];
 
@@ -294,6 +313,7 @@ class Mai_Ads_Manager_Fields {
 			'options_maiam_breakpoints',
 			'options_maiam_breakpoints_tablet',
 			'options_maiam_breakpoints_mobile',
+			'options_maiam_gam',
 			'options_maiam_ads',
 			'options_maiam_import',
 			'options_maiam_export',
@@ -303,6 +323,7 @@ class Mai_Ads_Manager_Fields {
 			'_options_maiam_breakpoints',
 			'_options_maiam_breakpoints_tablet',
 			'_options_maiam_breakpoints_mobile',
+			'_options_maiam_gam',
 			'_options_maiam_ads',
 			'_options_maiam_import',
 			'_options_maiam_export',
