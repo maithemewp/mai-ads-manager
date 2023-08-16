@@ -64,16 +64,17 @@ googletag.cmd.push(function() {
 	// Define Ad Slots.  These Ad Slots are defined using the Ad Unit Mappings above.
 
 	// console.log( maiAdsHelperVars.slot_ids );
-//
+	// console.log( maiAdsHelperVars.domain );
+
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-header' ) ) {
-		var header = googletag.defineSlot( '/22487526518/sugarmakers.org/header', headerAll, 'div-mai-ad-header' )
+		var header = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/header', headerAll, 'div-mai-ad-header' )
 						.addService( googletag.pubads() );
 
 		header.defineSizeMapping( headerSizeMap );
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-footer' ) ) {
-		var footer = googletag.defineSlot( '/22487526518/sugarmakers.org/footer', footerAll, 'div-mai-ad-footer' )
+		var footer = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/footer', footerAll, 'div-mai-ad-footer' )
 						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
@@ -81,21 +82,21 @@ googletag.cmd.push(function() {
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-1' ) ) {
-		var incontent1 = googletag.defineSlot( '/22487526518/sugarmakers.org/incontent', incontentAll, 	'div-mai-ad-incontent-1' )
+		var incontent1 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-1' )
 						.addService( googletag.pubads() );
 
 		incontent1.defineSizeMapping( incontentSizeMap );
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-2' ) ) {
-		var incontent2 = googletag.defineSlot( '/22487526518/sugarmakers.org/incontent', incontentAll, 	'div-mai-ad-incontent-2' )
+		var incontent2 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-2' )
 						.addService( googletag.pubads() );
 
 		incontent2.defineSizeMapping( incontentSizeMap );
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-infeed-1' ) ) {
-		var infeed1 = googletag.defineSlot( '/22487526518/sugarmakers.org/infeed', infeedAll, 'div-mai-ad-infeed-1' )
+		var infeed1 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/infeed', infeedAll, 'div-mai-ad-infeed-1' )
 						.addService( googletag.pubads() );
 
 		infeed1.defineSizeMapping( infeedSizeMap );

@@ -279,6 +279,22 @@ class Mai_Ads_Manager_Register {
 						'ui_off_text'   => '',
 					],
 					[
+						'label'             => __( 'Google Ads Manager Domain', 'mai-ads-manager' ),
+						'instructions'      => '',
+						'key'               => 'maiam_gam_domain',
+						'name'              => 'maiam_gam_domain',
+						'type'              => 'text',
+						'conditional_logic' => [
+							[
+								[
+									'field'    => 'maiam_gam',
+									'operator' => '==',
+									'value'    => '1',
+								],
+							],
+						],
+					],
+					[
 						'label'        => __( 'Import', 'mai-ads-manager' ),
 						'key'          => 'maiam_tab_import',
 						'type'         => 'tab',

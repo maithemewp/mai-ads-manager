@@ -123,8 +123,10 @@ class Mai_Ads_Manager_GAM {
 	 */
 	function enqueue_script() {
 		$slot_ids = $this->get_slot_ids();
+		$gam      = maiam_get_option( 'gam' );
+		$domain   = isset( $gam['domain'] ) ? $gam['domain'] : '';
 
-		if ( ! $slot_ids ) {
+		if ( ! ( $slot_ids && $domain ) ) {
 			return;
 		}
 
@@ -133,6 +135,7 @@ class Mai_Ads_Manager_GAM {
 		wp_localize_script( 'mai-ads-manager', 'maiAdsHelperVars',
 			[
 				'slot_ids' => $slot_ids,
+				'domain'   => $domain,
 			]
 		);
 	}
