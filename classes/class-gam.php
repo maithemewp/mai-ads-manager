@@ -125,6 +125,7 @@ class Mai_Ads_Manager_GAM {
 		$slot_ids = $this->get_slot_ids();
 		$gam      = maiam_get_option( 'gam' );
 		$domain   = isset( $gam['domain'] ) ? $gam['domain'] : '';
+		$domain   = $domain ? $domain : (string) wp_parse_url( esc_url( home_url() ), 1 );
 
 		if ( ! ( $slot_ids && $domain ) ) {
 			return;

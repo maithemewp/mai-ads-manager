@@ -180,6 +180,7 @@ class Mai_Ads_Manager_Fields {
 	function load_gam_domain( $field ) {
 		$gam            = maiam_get_option( 'gam' );
 		$domain         = isset( $gam['domain'] ) && $gam['domain'] ? (string) wp_parse_url( esc_url( $gam['domain'] ), 1 ) : '';
+		$domain         = $domain ? $domain : (string) wp_parse_url( esc_url( home_url() ), 1 );
 		$field['value'] = $domain;
 		return $field;
 	}
