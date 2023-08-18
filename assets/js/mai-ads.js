@@ -200,7 +200,7 @@ googletag.cmd.push(function() {
 
 	// define special ad units for Podcasts
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-podcast-footer' ) ) {
-		var podcast_footer = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/podcast-footer', footerAll, 'div-mai-ad-podcast-footer' )
+		var podcast_footer = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/podcast-footer', podcast_footerAll, 'div-mai-ad-podcast-footer' )
 						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
@@ -208,7 +208,7 @@ googletag.cmd.push(function() {
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-podcast-header' ) ) {
-		var podcast_header = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/podcast-header', headerAll, 'div-mai-ad-podcast-header' )
+		var podcast_header = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/podcast-header', podcast_headerAll, 'div-mai-ad-podcast-header' )
 						.addService( googletag.pubads() );
 
 		podcast_header.defineSizeMapping( podcast_headerSizeMap );
