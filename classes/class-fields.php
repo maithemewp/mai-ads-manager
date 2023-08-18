@@ -178,10 +178,7 @@ class Mai_Ads_Manager_Fields {
 	 * @return array
 	 */
 	function load_gam_domain( $field ) {
-		$gam            = maiam_get_option( 'gam' );
-		$domain         = isset( $gam['domain'] ) && $gam['domain'] ? (string) wp_parse_url( esc_url( $gam['domain'] ), 1 ) : '';
-		$domain         = $domain ? $domain : str_replace("www.", "", (string) wp_parse_url( esc_url( home_url() ), PHP_URL_HOST ));
-		$field['value'] = $domain;
+		$field['value'] = maiam_get_gam_domain();
 		return $field;
 	}
 
@@ -306,6 +303,7 @@ class Mai_Ads_Manager_Fields {
 		// Format domain.
 		if ( $gam_domain ) {
 			$gam_domain = (string) wp_parse_url( esc_url( $gam_domain ), 1 );
+			$gam_domain = wp_parse_url( 'www.', '', $gam_domain );
 		}
 
 		// Build options array.

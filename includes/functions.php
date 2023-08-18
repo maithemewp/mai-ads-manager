@@ -32,6 +32,21 @@ function maiam_get_ad( $args ) {
 }
 
 /**
+ * Returns the GAM domain.
+ *
+ * @since TBD
+ *
+ * @return string
+ */
+function maiam_get_gam_domain() {
+	$gam    = maiam_get_option( 'gam' );
+	$domain = isset( $gam['domain'] ) && $gam['domain'] ? (string) wp_parse_url( esc_url( $gam['domain'] ), 1 ) : '';
+	$domain = $domain ? $domain : (string) wp_parse_url( esc_url( home_url() ), PHP_URL_HOST );
+	$domain = str_replace( 'www.', '', $domain );
+	return $domain;
+}
+
+/**
  * Gets parsed and sanitized ad args.
  *
  * @access private
