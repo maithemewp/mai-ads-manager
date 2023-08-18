@@ -99,6 +99,17 @@ googletag.cmd.push(function() {
 		.addSize( [0, 0], podcast_headerMobile )
 		.build();
 
+	// Define sponsored-sidebar mappings.
+	var sponsored_sidebarAll     = [ [970,250], [970,90], [728,90], [468, 60], [320, 50] ];
+	var sponsored_sidebarDesktop = [ [970, 250], [970, 90], [728, 90] ];
+	var sponsored_sidebarTablet  = [ [468, 60], [320, 50] ];
+	var sponsored_sidebarMobile  = [ [320, 50] ];
+	var sponsored_sidebarSizeMap = googletag.sizeMapping()
+		.addSize( [1024, 768], sponsored_sidebarDesktop )
+		.addSize( [640, 480], sponsored_sidebarTablet )
+		.addSize( [0, 0], sponsored_sidebarMobile )
+		.build();
+
 
 	// Set SafeFrame -- This setting will only take effect for subsequent ad requests made for the respective slots.
 	// To enable cross domain rendering for all creatives, execute setForceSafeFrame before loading any ad slots.
@@ -124,6 +135,7 @@ googletag.cmd.push(function() {
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-header' ) ) {
 		var header = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/header', headerAll, 'div-mai-ad-header' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		header.defineSizeMapping( headerSizeMap );
@@ -140,30 +152,35 @@ googletag.cmd.push(function() {
 	// we will define five (5) incontent ads for now
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-1' ) ) {
 		var incontent1 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-1' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		incontent1.defineSizeMapping( incontentSizeMap );
 	}
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-2' ) ) {
 		var incontent2 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-2' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		incontent2.defineSizeMapping( incontentSizeMap );
 	}
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-3' ) ) {
 		var incontent3 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-3' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		incontent3.defineSizeMapping( incontentSizeMap );
 	}
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-4' ) ) {
 		var incontent4 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-4' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		incontent4.defineSizeMapping( incontentSizeMap );
 	}
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-incontent-5' ) ) {
 		var incontent5 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/incontent', incontentAll, 	'div-mai-ad-incontent-5' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		incontent5.defineSizeMapping( incontentSizeMap );
@@ -172,18 +189,21 @@ googletag.cmd.push(function() {
 	// we will define three (3) infeed ads for now
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-infeed-1' ) ) {
 		var infeed1 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/infeed', infeedAll, 'div-mai-ad-infeed-1' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		infeed1.defineSizeMapping( infeedSizeMap );
 	}
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-infeed-2' ) ) {
 		var infeed2 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/infeed', infeedAll, 'div-mai-ad-infeed-2' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		infeed2.defineSizeMapping( infeedSizeMap );
 	}
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-infeed-3' ) ) {
 		var infeed3 = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/infeed', infeedAll, 'div-mai-ad-infeed-3' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		infeed3.defineSizeMapping( infeedSizeMap );
@@ -192,6 +212,7 @@ googletag.cmd.push(function() {
 	// define inrecipe ad unit
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-inrecipe' ) ) {
 		var inrecipe = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/inrecipe', inrecipeAll, 'div-mai-ad-inrecipe' )
+						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
 		inrecipe.defineSizeMapping( inrecipeSizeMap );
@@ -212,6 +233,13 @@ googletag.cmd.push(function() {
 						.addService( googletag.pubads() );
 
 		podcast_header.defineSizeMapping( podcast_headerSizeMap );
+	}
+
+	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-sponsored-sidebar' ) ) {
+		var sponsored_sidebar = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/sponsored-sidebar', sponsored_sidebarAll, 'div-mai-ad-sponsored-sidebar' )
+						.addService( googletag.pubads() );
+
+		sponsored_sidebar.defineSizeMapping( sponsored_sidebarSizeMap );
 	}
 
 	// refresh ads only when they are in view and after expiration of SECONDS_TO_WAIT_AFTER_VIEWABILITY
