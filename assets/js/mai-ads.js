@@ -236,7 +236,7 @@ googletag.cmd.push(function() {
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-sponsored-sidebar' ) ) {
-		var sponsored_sidebar = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/sponsored-sidebar', sponsored_sidebarAll, 'div-mai-ad-sponsored-sidebar' )
+		var sponsored_sidebar = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/sponsored-sidebar', sponsored_sidebarAll, 'div-mai-ad-sponsored-sidebar-whoa' )
 						.addService( googletag.pubads() );
 
 		sponsored_sidebar.defineSizeMapping( sponsored_sidebarSizeMap );
