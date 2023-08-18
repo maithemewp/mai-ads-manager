@@ -191,7 +191,7 @@ googletag.cmd.push(function() {
 
 	// define inrecipe ad unit
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-inrecipe' ) ) {
-		var inrecipe = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/infeed', inrecipeAll, 'div-mai-ad-infeed-3' )
+		var inrecipe = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/inrecipe', inrecipeAll, 'div-mai-ad-inrecipe' )
 						.addService( googletag.pubads() );
 
 		inrecipe.defineSizeMapping( inrecipeSizeMap );
@@ -200,7 +200,7 @@ googletag.cmd.push(function() {
 
 	// define special ad units for Podcasts
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-podcast-footer' ) ) {
-		var podcast_footer = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/footer', footerAll, 'div-mai-ad-podcast-footer' )
+		var podcast_footer = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/podcast-footer', footerAll, 'div-mai-ad-podcast-footer' )
 						.setTargeting( REFRESH_KEY, REFRESH_VALUE )
 						.addService( googletag.pubads() );
 
@@ -208,7 +208,7 @@ googletag.cmd.push(function() {
 	}
 
 	if ( maiAdsHelperVars.slot_ids.includes( 'div-mai-ad-podcast-header' ) ) {
-		var podcast_header = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/header', headerAll, 'div-mai-ad-podcast-header' )
+		var podcast_header = googletag.defineSlot( '/22487526518/' + maiAdsHelperVars.domain + '/podcast-header', headerAll, 'div-mai-ad-podcast-header' )
 						.addService( googletag.pubads() );
 
 		podcast_header.defineSizeMapping( podcast_headerSizeMap );
