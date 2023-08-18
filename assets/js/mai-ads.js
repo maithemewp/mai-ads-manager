@@ -100,10 +100,10 @@ googletag.cmd.push(function() {
 		.build();
 
 	// Define sponsored-sidebar mappings.
-	var sponsored_sidebarAll     = [ [970,250], [970,90], [728,90], [468, 60], [320, 50] ];
-	var sponsored_sidebarDesktop = [ [970, 250], [970, 90], [728, 90] ];
-	var sponsored_sidebarTablet  = [ [468, 60], [320, 50] ];
-	var sponsored_sidebarMobile  = [ [320, 50] ];
+	var sponsored_sidebarAll     = [ [300, 250] ];
+	var sponsored_sidebarDesktop = [ [300, 250] ];
+	var sponsored_sidebarTablet  = [ [300, 520] ];
+	var sponsored_sidebarMobile  = [ [300, 250] ];
 	var sponsored_sidebarSizeMap = googletag.sizeMapping()
 		.addSize( [1024, 768], sponsored_sidebarDesktop )
 		.addSize( [640, 480], sponsored_sidebarTablet )
