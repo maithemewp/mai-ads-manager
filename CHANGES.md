@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.11.x (2023-08-17)
+* Added: support and logic for ad units, inclusion of files for default settings for a site
+
 ## 0.10.0 (8/8/23)
 * Added: Support for Hide Elements metabox in Mai Theme v2 to hide Mai Ads blocks anywhere the Hide Elements settings are supported.
 

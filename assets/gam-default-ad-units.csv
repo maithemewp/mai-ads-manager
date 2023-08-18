@@ -1,0 +1,8 @@
+domain.com/footer,footer,320x50; 468x60; 728x90; 970x90,,,"house-banners-footer, domain.com",_blank
+domain.com/fullscreen,fullscreen,Fluid; 320x480; 468x60; 480x320; 768x1024; 1024x768,,,domain.com,_blank
+domain.com/header,header,320x50; 468x60; 728x90; 970x90; 970x250,,,domain.com,_blank
+domain.com/incontent,incontent,300x100; 300x250; 336x280; 750x100; 750x200; 750x300; 970x66; 970x250,,,domain.com,_blank
+domain.com/infeed,infeed,240x400; 300x250; 300x600,,,domain.com,_blank
+domain.com/inrecipe,inrecipe,200x200; 250x250; 300x300; 400x400,,,domain.com,_blank
+domain.com/podcast-footer,podcast-footer,320x50; 468x60; 728x90; 970x90,,,domain.com,_blank
+domain.com/podcast-header,podcast-header,320x50; 468x60; 728x90; 970x90; 970x250,,,domain.com,_blank
