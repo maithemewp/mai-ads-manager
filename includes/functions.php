@@ -42,7 +42,7 @@ function maiam_get_ad( $args ) {
  */
 function maiam_get_gam_domain() {
 	$gam    = maiam_get_option( 'gam' );
-	$domain = isset( $gam['domain'] ) && $gam['domain'] ? (string) wp_parse_url( esc_url( $gam['domain'] ), 1 ) : '';
+	$domain = isset( $gam['domain'] ) && $gam['domain'] ? (string) wp_parse_url( esc_url( $gam['domain'] ), PHP_URL_HOST ) : '';
 	$domain = $domain ? $domain : (string) wp_parse_url( esc_url( home_url() ), PHP_URL_HOST );
 	$domain = str_replace( 'www.', '', $domain );
 	return $domain;

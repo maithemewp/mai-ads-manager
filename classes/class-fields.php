@@ -302,8 +302,8 @@ class Mai_Ads_Manager_Fields {
 
 		// Format domain.
 		if ( $gam_domain ) {
-			$gam_domain = (string) wp_parse_url( esc_url( $gam_domain ), 1 );
-			$gam_domain = wp_parse_url( 'www.', '', $gam_domain );
+			$gam_domain = (string) wp_parse_url( esc_url( $gam_domain ), PHP_URL_HOST );
+			$gam_domain = str_replace( 'www.', '', $gam_domain );
 		}
 
 		// Build options array.
