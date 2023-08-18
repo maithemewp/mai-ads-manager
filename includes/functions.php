@@ -34,6 +34,8 @@ function maiam_get_ad( $args ) {
 /**
  * Returns the GAM domain.
  *
+ * @access private
+ *
  * @since 0.11.0
  *
  * @return string
