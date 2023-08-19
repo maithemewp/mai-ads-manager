@@ -58,7 +58,7 @@ class Mai_Ads_Manager_GAM {
 		$resources[] = [
 			'href'        => 'https://securepubads.g.doubleclick.net/tag/js/gpt.js',
 			'as'          => 'script',
-//			'crossorigin' => 'anonymous',
+			'crossorigin' => 'anonymous',
 		];
 
 		$resources[] = [
