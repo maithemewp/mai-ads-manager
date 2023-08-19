@@ -4,7 +4,7 @@
  * Plugin Name:     Mai Ads Manager
  * Plugin URI:      https://bizbudding.com
  * Description:     Manage ad header and display code in one location. Works great with Mai Conditional Content Areas plugin.
- * Version:         0.11.0-beta.5
+ * Version:         0.11.0-beta.6
  *
  * Author:          BizBudding
  * Author URI:      https://bizbudding.com
@@ -92,7 +92,7 @@ final class Mai_Ads_Manager {
 	private function setup_constants() {
 		// Plugin version.
 		if ( ! defined( 'MAI_ADS_MANAGER_VERSION' ) ) {
-			define( 'MAI_ADS_MANAGER_VERSION', '0.11.0-beta.1' );
+			define( 'MAI_ADS_MANAGER_VERSION', '0.11.0-beta.6' );
 		}
 
 		// Plugin Folder Path.

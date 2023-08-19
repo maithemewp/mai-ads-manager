@@ -242,7 +242,7 @@ function maiam_get_settings_link( $text ) {
 /**
  * Get a string between a starting and ending point.
  *
- * @since TBD
+ * @since 0.11.0
  *
  * @param string $string          The string to check.
  * @param string $starting_string The starging string.
@@ -265,7 +265,7 @@ function maiam_get_string_between_strings( $string, $starting_string, $ending_st
 /**
  * Gets all instances of strings between a starting and ending point.
  *
- * @since TBD
+ * @since 0.11.0
  *
  * @param string $string          The string to check.
  * @param string $starting_string The starging string.
