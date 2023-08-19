@@ -238,3 +238,63 @@ function maiam_get_settings_link( $text ) {
 
 	return $link;
 }
+
+/**
+ * Get a string between a starting and ending point.
+ *
+ * @since TBD
+ *
+ * @param string $string          The string to check.
+ * @param string $starting_string The starging string.
+ * @param string $ending_string   The ending string.
+ *
+ * @return string
+ */
+function maiam_get_string_between_strings( $string, $starting_string, $ending_string ) {
+	$array = explode( $starting_string, $string );
+
+	if ( ! isset( $array[1] ) ) {
+		return '';
+	}
+
+	$array = explode( $ending_string, $array[1] );
+
+	return $array[0];
+}
+
+/**
+ * Gets all instances of strings between a starting and ending point.
+ *
+ * @since TBD
+ *
+ * @param string $string          The string to check.
+ * @param string $starting_string The starging string.
+ * @param string $ending_string   The ending string.
+ *
+ * @return array
+ */
+function maiam_get_all_strings_between_strings( $string, $starting_string, $ending_string ) {
+	$result = [];
+	$array  = explode( $starting_string, $string );
+
+	if ( ! $array ) {
+		return $result;
+	}
+
+	if ( isset( $array[1] ) ) {
+		unset( $array[0] );
+	}
+
+	foreach ( $array as $values ) {
+		$item = explode( $ending_string, $values );
+
+		if ( ! isset( $item[0] ) ) {
+			continue;
+		}
+
+		// Adds result, removing starting and ending string.
+		$result[] = $item[0];
+	}
+
+	return $result;
+}

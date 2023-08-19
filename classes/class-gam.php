@@ -194,6 +194,9 @@ class Mai_Ads_Manager_GAM {
 			return;
 		}
 
+		// Set empty array for slot ids.
+		$slot_ids = [];
+
 		// Set empty array for ad IDs.
 		$ad_ids = [];
 
@@ -242,39 +245,70 @@ class Mai_Ads_Manager_GAM {
 			}
 		}
 
+		// Get ads from sidebars.
+		if ( function_exists( 'mai_has_sidebar' ) && mai_has_sidebar() ) {
+
+			global $wp_registered_sidebars;
+
+			$sidebar_content = '';
+
+			foreach ( $wp_registered_sidebars as $key => $values ) {
+				// Bail if registered name doesn't include "sidebar".
+				// Genesis/Mai defaults sidebar is 'sidebar'.
+				// This is a loose attempt, but most of the time we register actual sidebars we use this naming convention, like 'product-sidebar'.
+				// We may check the content of a sidebar that is not displayed on a given page, but this whole check is early,
+				// so it's the best we can do for now.
+				// ray( 'here', $this->get_ad_block_ids( $sidebar_content ) );
+				if ( false === strpos( $key, 'sidebar' ) ) {
+					continue;
+				}
+
+				ob_start();
+				dynamic_sidebar( $key );
+				$sidebar_content .= ob_get_clean();
+			}
+
+			if ( $sidebar_content ) {
+				$ids = maiam_get_all_strings_between_strings( $sidebar_content, 'googletag.display(', ')' );
+
+				if ( $ids ) {
+					$slot_ids = array_merge( $slot_ids, $ids );
+				}
+			}
+		}
+
 		// Remove duplicates.
-		$ad_ids = array_unique( $ad_ids );
+		$slot_ids = array_unique( $slot_ids );
+		$ad_ids   = array_unique( $ad_ids );
 
 		// Bail if no ads.
-		if ( ! $ad_ids ) {
+		if ( ! ( $slot_ids || $ad_ids ) ) {
 			return;
 		}
 
 		// Get rendered ad ids that are in the Mai Ads Manger ads.
 		$ads = array_intersect_key( $ads, array_flip( $ad_ids ) );
 
-		// Bail if none.
-		if ( ! $ads ) {
-			return;
+		if ( $ads ) {
+			foreach ( $ads as $ad ) {
+				$id = maiam_get_string_between_strings( $ad['code'], 'googletag.display(', ')' );
+
+				if ( ! $id ) {
+					continue;
+				}
+
+				$slot_ids[] = $id;
+			}
 		}
 
-		// Get slot ids from ads.
-		$slot_ids = [];
-
-		foreach ( $ads as $ad ) {
-			$id = mai_get_string_between_strings( $ad['code'], 'googletag.display(', ')' );
-
-			if ( ! $id ) {
-				continue;
-			}
-
+		foreach ( $slot_ids as $key => $id ) {
 			$id = trim( $id );
 			$id = ltrim( $id, "'" );
 			$id = ltrim( $id, '"' );
 			$id = rtrim( $id, "'" );
 			$id = rtrim( $id, '"' );
 
-			$slot_ids[] = $id;
+			$slot_ids[ $key ] = $id;
 		}
 
 		return array_unique( $slot_ids );
