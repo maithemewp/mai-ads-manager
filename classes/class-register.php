@@ -39,7 +39,7 @@ class Mai_Ads_Manager_Register {
 	function register() {
 		acf_add_options_sub_page(
 			[
-				'title'      => __( sprintf("%s %s", 'Ads Manager', MAI_ADS_MANAGER_VERSION), 'mai-ads-manager' ),
+				'title'      => __( 'Ads Manager', 'mai-ads-manager' ),
 				'parent'     => class_exists( 'Mai_Engine' ) ? 'mai-theme' : 'options-general.php',
 				'menu_slug'  => 'mai-ads-manager',
 				'capability' => 'manage_options',
@@ -50,7 +50,7 @@ class Mai_Ads_Manager_Register {
 		acf_add_local_field_group(
 			[
 				'key'    => 'maiam_options',
-				'title'  => __( 'Mai Ads Manager', 'mai-ads-manager' ),
+				'title'  => __( sprintf("%s %s", 'Ads Manager', MAI_ADS_MANAGER_VERSION), 'mai-ads-manager' ),
 				'fields' => [
 					[
 						'label' => __( 'Ad Code', 'mai-ads-manager' ),
