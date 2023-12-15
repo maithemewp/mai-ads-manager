@@ -163,7 +163,7 @@ class Mai_Ads_Manager_GAM {
 		$file      = "assets/js/mai-ads{$suffix}.js";
 		$file_path = MAI_ADS_MANAGER_PLUGIN_DIR . $file;
 		$file_url  = MAI_ADS_MANAGER_PLUGIN_URL . $file;
-		$version   = MAI_ANALYTICS_VERSION;
+		$version   = MAI_ADS_MANAGER_VERSION;
 		$version  .= '.' . date( 'njYHi', filemtime( $file_path ) );
 		$cache     = [
 			'path'    => $file_path,
