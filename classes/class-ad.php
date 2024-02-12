@@ -4,18 +4,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Mai_Ad {
-	/**
-	 * Args.
-	 *
-	 * @var array $args.
-	 */
 	public $args;
-
-	/**
-	 * Has aspect ratio.
-	 *
-	 * @var bool $has_ratio.
-	 */
+	public $style;
 	public $has_ratio;
 
 	/**
