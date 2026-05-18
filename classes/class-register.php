@@ -391,6 +391,10 @@ class Mai_Ads_Manager_Register {
 	 * @return array
 	 */
 	function load_export_field( $field ) {
+		if ( ! is_admin() ) {
+			return $field;
+		}
+
 		$field['value']    = wp_json_encode( (array) maiam_get_option( 'ads' ) );
 		$field['readonly'] = 'readonly';
 
@@ -410,8 +414,11 @@ class Mai_Ads_Manager_Register {
 	 * @return array associative array of plugin action links
 	 */
 	function add_settings_link( $actions, $plugin_file, $plugin_data, $context ) {
-		$actions['settings'] = maiam_get_settings_link( __( 'Settings', 'mai-ads-manager' ) );
+		// Prepend so Settings renders before the Deactivate link.
+		$custom = [
+			'settings' => maiam_get_settings_link( __( 'Settings', 'mai-ads-manager' ) ),
+		];
 
-		return $actions;
+		return array_merge( $custom, $actions );
 	}
 }
